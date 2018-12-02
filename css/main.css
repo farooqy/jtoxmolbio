@@ -466,3 +466,35 @@ body {
 	display: none;
 	
 }
+
+/* profile page */
+.profilePage {
+	background-color: white;
+}
+.profileDiv {
+	margin-top: 20px;
+}
+.profileDiv div label{
+	padding-left: 10px;
+	display: block;
+	padding-top: 20px;
+}
+
+.profileDiv div input{
+	width: 70%;
+	height: 45px;
+	border: thin solid gray;
+	border-radius: 10px;
+	padding-left: 10px;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	font-size: 20px;
+}
+.profileDiv div input:focus{
+	box-shadow: 1px 1px 10px 1px #16FF80;
+}
+
+.profileDiv div button{
+	height: 40px;
+	width: 25%;
+	margin-bottom: 10px;
+}

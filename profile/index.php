@@ -5,9 +5,9 @@ $url = "http://jtoxmolbio/";
 //	header( "Location: $url" . "maintenance" );
 //	exit( 0 );
 //}
-if(isset($_SESSION["isLogggedIn"]))
+if(isset($_SESSION["isLoggedIn"]) === false)
 {
-	header("Location: $url.'login?redirect=profile'");
+	header("Location: $url".'login?redirect=profile');
 	exit(0);
 }
 $profilePage = true;
@@ -37,38 +37,52 @@ $profilePage = true;
   	<?php require($root."includes/nav.php"); ?>
   </div>
   
-  <div class="row loginPage">
+  <div class="row errorDiv">
+  	
+  </div>
+  <div class="row profilePage">
   <div class="col-xs-0 col-sm-0 col-md-3 col-lg-3">
   	
   </div>
-  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 loginDiv">
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 profileDiv">
   	<div class="row ">
   		<label for="userFirstName" class="textLabel">First Name</label>
-  		<input type="text" class="userFirstName" name="userFirstName" placeholder="UserFirstName" value="">
+  		<input type="text" class="userFirstName" name="userFirstName" placeholder="first name" value="">
+  		<button class="btn btn-primary" target="">Save</button>
   	</div>
   	<div class="row ">
-  		<label for="userFirstName" class="textLabel"> Last Name</label>
-  		<input type="text" class="userFirstName" name="userFirstName" placeholder="UserFirstName" value="">
+  		<label for="userLastName" class="textLabel"> Last Name</label>
+  		<input type="text" class="userLastName" name="userLastName" placeholder="last name" value="">
+  		<button class="btn btn-primary" target="">Save</button>
   	</div>
   	<div class="row ">
-  		<label for="userFirstName" class="textLabel">Email Address</label>
-  		<input type="text" class="userFirstName" name="userFirstName" placeholder="UserFirstName" value="">
+  		<label for="userEmailAddress" class="textLabel">Email Address</label>
+  		<input type="text" class="userEmailAddress" name="userEmailAddress" placeholder="email address" value="">
+  		<button class="btn btn-primary" target="">Save</button>
   	</div>
   	<div class="row ">
-  		<label for="userFirstName" class="textLabel">Password</label>
-  		<input type="text" class="userFirstName" name="userFirstName" placeholder="UserFirstName" value="">
+  		<label for="userPasswordOld" class="textLabel">Old Password</label>
+  		<input type="password" class="userPasswordOld" name="userPasswordOld" placeholder="old password" value="">
   	</div>
   	<div class="row ">
-  		<label for="userFirstName" class="textLabel">Institue</label>
-  		<input type="text" class="userFirstName" name="userFirstName" placeholder="UserFirstName" value="">
+  		<label for="userPasswordNew" class="textLabel">New Password</label>
+  		<input type="password" class="userPasswordNew" name="userPasswordNew" placeholder="new password" value="">
+  		<button class="btn btn-primary" target="">Save</button>
   	</div>
   	<div class="row ">
-  		<label for="userFirstName" class="textLabel">Department</label>
-  		<input type="text" class="userFirstName" name="userFirstName" placeholder="UserFirstName" value="">
+  		<label for="userInstitute" class="textLabel">Institue</label>
+  		<input type="text" class="userInstitute" name="userInstitute" placeholder="Institute" value="">
+  		<button class="btn btn-primary" target="">Save</button>
   	</div>
   	<div class="row ">
-  		<label for="userFirstName" class="textLabel">Country</label>
-  		<input type="text" class="userFirstName" name="userFirstName" placeholder="UserFirstName" value="">
+  		<label for="userDepartment" class="textLabel">Department</label>
+  		<input type="text" class="userDepartment" name="userDepartment" placeholder="UserFirstName" value="">
+  		<button class="btn btn-primary" target="">Save</button>
+  	</div>
+  	<div class="row ">
+  		<label for="userCountry" class="textLabel">Country</label>
+  		<input type="text" class="userCountry" name="userCountry" placeholder="Country" value="">
+  		<button class="btn btn-primary" target="">Save</button>
   	</div>
   	<div class="row redirectPage">
   		<p>

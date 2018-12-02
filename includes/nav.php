@@ -79,7 +79,7 @@ $ccLincese = $url."uploads/sitefiles/icons/cclicense.png";
 					?>
 					
 		        <li class="<?php if(isset($loginPage)) echo 'active' ?>"><a href="<?php echo $login ?>">Login</a></li>
-				<li class="<?php if(isset($registerPage)) echo 'active' ?>"><a href="<?php echo $board ?>">Register</a></li>
+				<li class="<?php if(isset($registerPage)) echo 'active' ?>"><a href="<?php echo $register ?>">Register</a></li>
 					<?php 
 				}
 				  ?>

@@ -5,7 +5,7 @@ $(document).ready(function(){
 	$('.toggleAuthorBox').click(function(){
 		$('.authorInfoBoxDiv').toggle();
 	});
-	//show forms on demand
+	//show forms on demand sumbit page
 	$('.formTrigger').click(function(){
 		var currentform = $('.currentForm');
 		var currentBar = $('.currentTrigger');
@@ -39,6 +39,17 @@ $(document).ready(function(){
 		var url = baserUrl+'login/handleLogin.php';
 		ajax_request(formData, url, 'login');
 	});
+	
+	//profile page
+	if($('div').hasClass('profilePage'))
+	{
+		$('.profileDiv').css('display','none');
+		var formData = new FormData();
+		formData.append('requestType', 'profile');
+		var url = baserUrl+'profile/getProfile.php';
+		ajax_request(formData, url, 'profileGet');
+	}
+	
 });
 
 
@@ -69,10 +80,29 @@ function successHandle(data,regType)
 	}
 	else if(data.isSuccess === true)
 	{
-		if(regType === "register" || "login")
+		if(regType === "register" || regType === "login")
 		{
-			window.location.href = baserUrl+'profile';
-		}	
+			if($('div').hasClass('redirect'))
+			{
+				var page = $('.redirect').attr('target');
+				window.location.href = baserUrl+page;
+			}
+			else
+			{
+				window.location.href = baserUrl;
+			}	
+		}
+		else if(regType === "profileGet")
+		{
+			alert("data "+JSON.stringify(data.data));
+			$('.userFirstName').val(data.data.firstName);
+			$('.userLastName').val(data.data.lastName);
+			$('.userEmailAddress').val(data.data.email);
+			$('.userInstitute').val(data.data.institution);
+			$('.userDepartment').val(data.data.department);
+			$('.userCountry').val(data.data.country);
+			$('.profileDiv').css('display','block');
+		}
 		else
 		{
 			alert("success done");

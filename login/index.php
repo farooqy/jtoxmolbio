@@ -7,7 +7,7 @@ $url = "http://jtoxmolbio/";
 //}
 if(isset($_SESSION["isLoggedIn"]))
 {
-	header("Location: $url/profile");
+	header("Location: $url".'profile');
 	exit(0);
 }
 $loginPage = true;
@@ -62,6 +62,17 @@ $loginPage = true;
 				<div class="errorDiv">
                		
                 </div>
+                <?php 
+				if(isset($_GET["redirect"]))
+				{
+					?>
+					<div class="redirect" target="<?php echo $_GET['redirect'] ?>"> 
+
+					</div>
+					<?php 
+				}
+				?>
+					
                 <div class="row memberNotMember">
 					<p>
 						Already a member?
