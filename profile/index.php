@@ -5,7 +5,11 @@ $url = "http://jtoxmolbio/";
 //	header( "Location: $url" . "maintenance" );
 //	exit( 0 );
 //}
-
+if(isset($_SESSION["isLogggedIn"]))
+{
+	header("Location: $url.'login?redirect=profile'");
+	exit(0);
+}
 $profilePage = true;
 ?>
 <!doctype html>
