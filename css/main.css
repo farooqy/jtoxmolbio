@@ -1,0 +1,468 @@
+body {
+	background-color:#e1fbee;
+}
+.Progressbar1 {
+	display: block;
+}
+.navbar-inverse {
+	background-color: white;;
+	color: black;
+}
+.mainlogo1 {
+	margin-top: -8px;
+}
+.mainlogo3 {
+	display: none;
+}
+.navbar-inverse .navbar-nav li a:visited , .navbar-inverse .navbar-nav li a, 
+ .navbar-inverse .navbar-nav li a:hover , .navbar-inverse .navbar-nav li a:focus, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus{
+	color:black;
+	font-size: larger ;
+	font-family: Times New Roman, Cambria, Hoefler Text, Liberation Serif, Times,  serif;
+}
+.navbar-inverse .navbar-nav li a:nth-child(odd)
+{
+	border-right: thin solid #FFE6E7;
+}
+.navbar-inverse .navbar-nav .active a , .navbar-inverse .navbar-nav li a:hover , .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus , .navbar-inverse .navbar-nav li a:hover, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+	background-color: #00b991;
+	color:white;
+}
+ .navbar > .container-fluid .logo2 .navbar-brand 
+{
+	margin-left: 10px; 
+	margin-bottom: 10px;
+}
+.navbar-inverse .navbar-toggle {
+	background-color:  #00b991;
+	color:white;
+}
+.firstContent {
+	margin-top: 110px;
+}
+.firstContent .sliderBox .slide .item img {
+	height: 400px;
+}
+.coverpage {
+	background-image: url(../uploads/sitefiles/slide/coverpage.png);
+	height: 400px;
+	margin-left: 1px;
+	background-size: cover;
+}
+.latestArticleBar , .rightbarText{
+	margin-top: 20px;
+	background-color: #00b991;
+	color:white;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif,Times, serif;
+	font-size: 20px;
+	font-weight: bolder;
+	padding-left: 5px;
+	
+}
+.rightbarText {
+	margin-left: 1px;
+}
+.media-object-default {
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	margin-bottom: 10px;
+	background-color: white;
+	border:thin solid gray;
+	border-radius: 5px;
+}
+.media-object-default h3 , .media-object-default span{
+	font-weight: bolder;
+}
+.media-object-default span {
+	margin-top:10px;
+	margin-left: 10px;
+}
+.media-object-default .openArticle span {
+	margin-left: 10px;
+	margin-top:15px;
+}
+.media-object-default span:nth-child(2) {
+	margin-left: 20px;
+}
+.openArticle a, .openArticle span {
+	color: #00b991;
+	font-size: 20px;
+}
+.formHomeLogin, .contactusPageBox {
+	display: block;
+	margin-left: 1px;
+	background-color: #ffffff;
+	border: thin solid #F6EAEA;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+}
+.formHomeLogin label, .formHomeLogin input{
+	display: block;
+	width: 100%;
+	height: 30px;
+	
+}
+.formHomeLogin #inputPassword , .formHomeLogin .btn-login{
+	display: inline;
+	width: 48%;
+}
+.openaccess {
+	margin-top:15px;
+	background-color: antiquewhite;
+	border:thin solid gray;
+	border-radius: 2%;
+	background: url("../uploads/sitefiles/slide/open access.png");
+	height: 140px;
+	background-size: cover;
+	margin-left: 1px;
+}
+.contactUsBox {
+	margin-left: 1px;
+	border: thin solid gray;
+	background-color:white;
+	color:black;
+	text-align: center;
+	font-size: 18px;
+	padding: 10px;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+}
+.contactUsBox a , .contactUsBox a:visited {
+	color:black;
+}
+.aboutUsContent, .authorsPageBox , .contactusPageBox{
+	margin-top: 110px;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	font-size: 19px;
+}
+.aboutUsContent  .row {
+	padding-left: 40px;
+	padding-right: 80px;
+}
+.authorsPageBox {
+	font-size:21px;
+}
+.authorsPageBox .pdf-Authors{
+	font-size:150px;
+	color: #00b991;
+	border: thin solid #B09091;
+	border-radius: 5px;
+	background-color: white;
+	padding: 5px;
+}
+
+.authorsPageBox .pdf-Authors:hover{
+	background-color: #3F5F67;
+	color:white;
+}
+.contactusPageBox {
+	margin-left: -12px;
+}
+.contactusPageBox .formContactUs{
+	width:100%;
+}
+.contactusPageBox .formContactUs input , .contactusPageBox .formContactUs textarea{
+	display: block;
+	width: 100%;
+	resize: none;
+	border:thin solid #ECD2D2;
+	border-radius: 5px;
+	padding-left: 5px;
+	margin-bottom: 20px;
+		
+}.contactusPageBox .formContactUs input:focus , .contactusPageBox .formContactUs textarea:focus {
+	box-shadow: 1px 1px 10px 1px #00b991;
+}
+.contactusPageBox .formContactUs textarea {
+	height: 150px;
+}
+.btn-feedBack {
+	background-color: aquamarine;
+	font-size: 15px;
+	font-weight: bold;
+	
+}
+.submitPageBox {
+	margin-top: 60px;
+}
+#paperForm1, #paperForm2 {
+	background-color: #ffffff;
+	border:thin solid gray;
+	padding: 10px;
+	border-radius: 5px;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	font-size: 20px;
+}
+.paperForm2, .paperForm3, .paperForm4 {
+	display: none;
+}
+.formTrigger {
+	cursor: pointer;
+}
+#paperForm1 input , #paperForm1 select , #paperForm1 textarea , #paperForm2 input , #paperForm2 select  { 
+	display: block;
+	height: 45px;
+	border:thin solid #A49D9D;
+	border-radius: 10px;
+	width: 100%;
+	box-shadow: 1px 1px 10px 0.3px #000000;
+	margin-bottom: 20px;
+	padding: 10px;
+}
+#paperForm1 input:focus , #paperForm1 select:focus , #paperForm1 textarea:focus , #paperForm2 input:focus , #paperForm2 select:focus  { 
+	box-shadow: 1px 1px 10px 1px #00b991;
+}
+#paperForm1 textarea   {
+	resize: none;
+	height: 300px;
+}
+#paperForm1 .btn {
+	display: inline;
+	width: 30%;
+}
+#paperForm1 .btn-primary {
+	background-color: aquamarine;
+	color:black;
+	width: 50%;
+}
+#paperForm1 .btn {
+	box-shadow: 0px 0px 0px 0px #000000;
+}
+.submitRightBarDiv {
+	background-color: white;
+	color:black;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	font-size: 20px;
+	padding-bottom: 10px;
+	margin-bottom: 2px;
+}
+
+.submitRightBarDiv  .active {
+	background-color:#00b991;
+}
+.submitRightBarDiv div { 
+	padding-left: 10px;
+	padding-top: 10px;
+	border: thin solid #9F9F9F;
+}
+#paperForm2 table {
+	border:thin solid #E8BEBF;
+	margin-left: 2px;
+	margin-top: 10px;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	text-align: center;
+}
+#paperForm2 table thead {
+	background-color: #00b991;
+}
+
+#paperForm2 table thead th{
+	border-right: thin solid white;
+}
+#paperForm2 table tbody tr:hover {
+	background-color: #9A58F7;
+	color:white;
+}
+#paperForm2 table tbody tr td{
+	border-right: thin solid gray;
+}
+#paperForm2 table tbody tr td span{
+	color:red;
+	cursor: pointer;
+}
+#paperForm2 table tbody tr td input{
+	height: 25px;
+	width: 25px;
+}
+.authorInfoBoxDiv {
+	display: none;
+}
+.toggleAuthorBox {
+	margin-left: 40%;
+	margin-bottom: 20px;
+	width: 150px;
+	background-color: #16FF80;
+	color: black;
+	font-weight: bold;
+}
+
+.uploadDivBox {
+	background-color: white;
+	padding-left: 10px;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	font-size: 18px;
+	padding-right: 10px;
+}
+.uploadDivBox .uploadTriggers button {
+	font-weight: bold;
+	border:thin solid black;
+	margin-right: 10px;
+}
+.uploadDivBox .uploadTriggers button:nth-child(1) {
+	background-color: aqua;
+}
+.uploadDivBox .uploadTriggers button:nth-child(2) {
+	background-color: #9291E0;
+}
+.uploadDivBox .uploadTriggers button:nth-child(3) {
+	background-color: #B6FC8F;
+}
+.uploadDivBox .uploadTriggers button:nth-child(4) {
+	background-color: #FF41C8;
+}
+.uploadDivBox .uploadTriggers button:hover {
+	box-shadow: 1px 1px 10px 1px #16FF80;
+}
+.tableManuscript  {
+	margin-top: 10px;
+	border-top: thin solid gray;
+	margin-left: -5px;
+	text-align: center;
+}
+.tableManuscript thead {
+	background-color: #16FF80;
+}
+.tableManuscript tbody tr:nth-child(odd) {
+	background-color: #A584CB;
+	color:black;
+	border-bottom: thin solid gray;
+}
+.tableManuscript tbody tr .glyphicon-remove-sign {
+	color:red;
+	cursor: pointer;
+}
+.uploadDivBox .uploadForm3 .btn-danger {
+	width: 35%;
+	margin-right: 10px;
+}
+.uploadDivBox .uploadForm3 .btn-primary {
+	width: 50%;
+}
+.uploadDivBox .uploadForm3 .btn:hover {
+	box-shadow: 1px 1px 10px 1px #16FF80;
+}
+
+/* Review box */
+.reviewDivBox {
+	background-color: white;
+	padding-left: 10px;
+	border:thin solid #ECDEDE;
+	margin-left: 1px;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	font-size: 18px;
+}
+
+.reviewDivBox  .reviewSubmitionLink span{
+	font-size: 32px;
+	color:red;
+	margin-bottom: 20px;
+}
+.reviewDivBox  .reviewSubmitionLink a{
+	font-size: 32px;
+	color:#001CC5;
+	margin-bottom: 20px;
+}
+.reviewDivBox .tablePreviewSubmition thead {
+	background-color: #16FF80;
+}
+.reviewDivBox .tablePreviewSubmition tbody tr{
+	border:thin solid #ECDEDE;
+}
+.reviewDivBox .paperForm4 .btn-danger {
+	width: 40%;
+	margin-bottom: 20px;
+}
+.reviewDivBox .paperForm4 .btn-primary {
+	width: 50%;
+	margin-bottom: 20px;
+	background-color: #16FF80;
+	color:black;
+}
+
+.reviewDivBox .paperForm4 .btn:hover {
+	box-shadow: 1px 1px 10px 1px #16FF80;
+}
+
+/* login div */
+.loginPage {
+	margin-top: 50px;
+}
+.loginDiv form {
+	background-color: white;
+	padding: 10px;
+}
+.loginDiv form .formBlock input {
+	display: block;
+	height: 35px;
+	border: thin solid #59E9E3;
+	width: 100%;
+	margin-bottom: 20px;
+}
+.loginDiv form .formBlock input:focus {
+	box-shadow: 1px 1px 10px 1px #16FF80;
+}
+.loginDiv form .formInline {
+	margin-bottom: 20px;
+	padding-left: 10px;
+	
+}
+.loginDiv form .formInline input {
+	display:inline;
+}
+ .loginPage .redirectPage {
+	 margin-bottom: 150px;
+}
+
+/*registration */
+
+.registerPage {
+	margin-top: 50px;
+}
+.registerDiv form {
+	background-color: white;
+	padding: 10px;
+}
+.registerDiv form .formBlock input {
+	display: block;
+	height: 35px;
+	border: thin solid #16FF80;
+	width: 100%;
+	margin-bottom: 20px;
+	border-radius:5px;
+}
+.registerDiv form .formInline {
+	margin-bottom: 20px;
+	padding-left: 10px;
+	
+}
+.registerDiv form .formInline input {
+	display:inline;
+
+}
+.registerDiv form .formBlock input:focus , .registerDiv form .bfh-selectbox a:focus, .registerDiv form .bfh-selectbox a:active{
+	box-shadow: 1px 1px 10px 1px #16FF80;
+}
+.registerDiv form .bfh-selectbox {
+	width:100%;
+}
+.memberNotMember {
+	padding-left: 20px;
+}
+/* rua page */
+.rua-agreement {
+	margin-top: 90px;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	font-size: 18px;
+}
+/* progressbar custoom && error holder*/
+.progress {
+	display: none;
+}
+.progress-bar {
+	background-color: #16FF80;
+	color: black;
+}
+.errorDiv {
+	color:red;
+	display: none;
+	
+}

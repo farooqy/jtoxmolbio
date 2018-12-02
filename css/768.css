@@ -1,0 +1,32 @@
+/* CSS Document */
+@media (max-width:767px) {
+	.coverpage, .rightbarText, .formHomeLogin, .openaccess , .contactUsBox  {
+		margin-left: -13px;
+	}
+	.firstContent, .aboutUsContent , .contactusPageBox {
+		margin-top: 90px;
+	}
+	.mainlogo1, .mainlogo2 {
+		display: none;
+	}
+	.mainlogo3 {
+		display: block;
+		margin-top: -10px;
+	}
+	.firstContent .sliderBox .slide .item img {
+	height: 280px;
+	}
+	.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+		color:black;
+	}
+	.openaccess, .coverpage {
+		display: none;
+	}
+	.aboutUsContent  .row {
+		padding-right: 40px;
+
+	}
+	.submitPageBox {
+		margin-top: 0px;
+	}
+}
