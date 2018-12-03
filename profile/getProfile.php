@@ -7,16 +7,17 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_POST["requestType"]))
 	$errorMessage = null;
 	$successMessage = null;
 	$isSuccess = false;
-	$userToken = $_SESSION["token"];
+	$userToken = $_SESSION["veriftoken"];
 	$userEmail = $_SESSION["email"];
-	
+	$data = null;
+//	print_r($_SESSION);
 	if(empty($userToken))
 	{
-		$errorMessage = "Invalid user credential token";
+		$errorMessage = "Invalid user credential token Please log out and login back";
 	}
 	else if(empty($userEmail))
 	{
-		$errorMessage = "Invalid user credential email";
+		$errorMessage = "Invalid user credential email. Please log out and login back";
 	}
 	else if($_POST["requestType"] === "profile")
 	{

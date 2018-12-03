@@ -49,7 +49,11 @@ $(document).ready(function(){
 		var url = baserUrl+'profile/getProfile.php';
 		ajax_request(formData, url, 'profileGet');
 	}
-	
+	$('.changeProfile').click(function(){
+		var target = $(this).attr('target');
+		var input  = $('.'+target).val();
+		alert(input);
+	});
 });
 
 
@@ -101,6 +105,7 @@ function successHandle(data,regType)
 			$('.userInstitute').val(data.data.institution);
 			$('.userDepartment').val(data.data.department);
 			$('.userCountry').val(data.data.country);
+			$('.userTitle').val(data.data.salutation);
 			$('.profileDiv').css('display','block');
 		}
 		else
@@ -116,6 +121,8 @@ function successHandle(data,regType)
 }
 function errorHandle(error)
 {
+	$('.errorDiv').text(error.state+ " "+ error.statusText);
+	$('.errorDiv').css('display',"block");
 	alert(JSON.stringify("ERROR: "+error.status+" "+error.statusText));
 }
 function processError(message)

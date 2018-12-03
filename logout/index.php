@@ -3,7 +3,7 @@
 $url = "http://jtoxmolbio/";
 
 $_SESSION["isLoggedIn"] = false;
-$_SESSION["token"] = null;
+$_SESSION["veriftoken"] = null;
 $_SESSION["email"] = null;
 $_SESSION["fullname"] = null;
 $_SESSION["country"] = null;
@@ -11,7 +11,7 @@ $_SESSION["institute"] = null;
 $_SESSION["department"] =null;
 
 unset($_SESSION["isLoggedIn"]) ;
-unset($_SESSION["token"]);
+unset($_SESSION["veriftoken"]);
 unset($_SESSION["email"]) ;
 unset($_SESSION["fullname"]);
 unset($_SESSION["country"]) ;

@@ -100,7 +100,7 @@ if(isset($_POST["registerUser"]))
 				$successMessage = "success";
 				$isSuccess = true;
 				$_SESSION["isLoggedIn"] = true;
-				$_SESSION["token"] = $verifToken;
+				$_SESSION["veriftoken"] = $verifToken;
 				$_SESSION["email"] = $userData[0];
 				$_SESSION["fullname"] = $userData[1]." ".$userData[3];
 				$_SESSION["country"] = $userData[8];

@@ -464,6 +464,7 @@ body {
 .errorDiv {
 	color:red;
 	display: none;
+	text-align: center;
 	
 }
 
@@ -497,4 +498,23 @@ body {
 	height: 40px;
 	width: 25%;
 	margin-bottom: 10px;
+}
+/* general */
+.mar-top-90 {
+	margin-top: 90px;
+}
+.loader-gif img {
+	height: 100px;
+}
+.loader-gif {
+	position: fixed;
+	top:0px;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	z-index: 9999;
+	padding-top: 20%;
+	text-align: center;
+	background-color: rgba(13,114,31,0.50);
+	display: none;
 }

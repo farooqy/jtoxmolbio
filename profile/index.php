@@ -37,7 +37,7 @@ $profilePage = true;
   	<?php require($root."includes/nav.php"); ?>
   </div>
   
-  <div class="row errorDiv">
+  <div class="row errorDiv mar-top-90">
   	
   </div>
   <div class="row profilePage">
@@ -46,19 +46,24 @@ $profilePage = true;
   </div>
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 profileDiv">
   	<div class="row ">
+  		<label for="userTitle" class="textLabel">Salutation</label>
+  		<input type="text" class="userTitle" name="userTitle" placeholder="first name" value="">
+  		<button class="btn btn-primary changeProfile" target="userTitle">Save</button>
+  	</div>
+  	<div class="row ">
   		<label for="userFirstName" class="textLabel">First Name</label>
   		<input type="text" class="userFirstName" name="userFirstName" placeholder="first name" value="">
-  		<button class="btn btn-primary" target="">Save</button>
+  		<button class="btn btn-primary changeProfile" target="userFirstName">Save</button>
   	</div>
   	<div class="row ">
   		<label for="userLastName" class="textLabel"> Last Name</label>
   		<input type="text" class="userLastName" name="userLastName" placeholder="last name" value="">
-  		<button class="btn btn-primary" target="">Save</button>
+  		<button class="btn btn-primary changeProfile" target="userLastName">Save</button>
   	</div>
   	<div class="row ">
   		<label for="userEmailAddress" class="textLabel">Email Address</label>
   		<input type="text" class="userEmailAddress" name="userEmailAddress" placeholder="email address" value="">
-  		<button class="btn btn-primary" target="">Save</button>
+  		<button class="btn btn-primary changeProfile" target="userEmailAddress">Save</button>
   	</div>
   	<div class="row ">
   		<label for="userPasswordOld" class="textLabel">Old Password</label>
@@ -67,22 +72,22 @@ $profilePage = true;
   	<div class="row ">
   		<label for="userPasswordNew" class="textLabel">New Password</label>
   		<input type="password" class="userPasswordNew" name="userPasswordNew" placeholder="new password" value="">
-  		<button class="btn btn-primary" target="">Save</button>
+  		<button class="btn btn-primary changeProfile" target="userPassword">Save</button>
   	</div>
   	<div class="row ">
   		<label for="userInstitute" class="textLabel">Institue</label>
   		<input type="text" class="userInstitute" name="userInstitute" placeholder="Institute" value="">
-  		<button class="btn btn-primary" target="">Save</button>
+  		<button class="btn btn-primary changeProfile" target="userInstitute">Save</button>
   	</div>
   	<div class="row ">
   		<label for="userDepartment" class="textLabel">Department</label>
   		<input type="text" class="userDepartment" name="userDepartment" placeholder="UserFirstName" value="">
-  		<button class="btn btn-primary" target="">Save</button>
+  		<button class="btn btn-primary changeProfile" target="userDepartment">Save</button>
   	</div>
   	<div class="row ">
   		<label for="userCountry" class="textLabel">Country</label>
   		<input type="text" class="userCountry" name="userCountry" placeholder="Country" value="">
-  		<button class="btn btn-primary" target="">Save</button>
+  		<button class="btn btn-primary changeProfile" target="userCountry">Save</button>
   	</div>
   	<div class="row redirectPage">
   		<p>
@@ -100,6 +105,9 @@ $profilePage = true;
 </div>
 <div class="container">
 	<?php require_once($root."includes/footer.html") ?>
+</div>
+<div class="container-fluid loader-gif">
+	<img src="../uploads/sitefiles/icons/tv_loading.gif">
 </div>
 
 <script src="../js/jquery-1.11.3.min.js"></script>
