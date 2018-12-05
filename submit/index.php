@@ -5,7 +5,13 @@ $url = "http://jtoxmolbio/";
 //	header( "Location: $url" . "maintenance" );
 //	exit( 0 );
 //}
-
+if(isset($_SESSION["ManInfo"]))
+{
+	$_ManType = $_SESSION["ManInfo"]["man_type"];
+	$_ManTitle = $_SESSION["ManInfo"]["man_title"];
+	$_ManAbstract = $_SESSION["ManInfo"]["man_abstract"];
+	$_ManKeywords = $_SESSION["ManInfo"]["man_keywords"];
+}
 $submitPage = true;
 ?>
 <!doctype html>
@@ -35,16 +41,16 @@ $submitPage = true;
   
   <div class="row submitPageBox" id="content">
 	<div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 submitRightBarDiv">
-		<div class="row active formTrigger currentTrigger" target="paperForm1">
+		<div class="row active formTrigger currentTrigger triggerForm1" target="paperForm1" >
 			Manuscript Information <span class="glyphicon glyphicon-ok-circle" class="paperForm2"></span>
 		</div>
-		<div class="row formTrigger" target="paperForm2">
+		<div class="row formTrigger triggerForm2" target="paperForm2" >
 			Authors <span class="glyphicon glyphicon-remove-circle" class="paperForm2"></span>
 		</div>
-		<div class="row formTrigger" target="paperForm3">
+		<div class="row formTrigger triggerForm3 " target="paperForm3" >
 			Upload files <span class="glyphicon glyphicon-remove-circle" class="paperForm2"></span>
 		</div>
-		<div class="row formTrigger" target="paperForm4">
+		<div class="row formTrigger triggerForm4" target="paperForm4" >
 			Review and submit <span class="glyphicon glyphicon-remove-circle" class="paperForm2"></span>
 		</div>
 	</div>
@@ -55,29 +61,30 @@ $submitPage = true;
 				
 				<form id="paperForm1" name="paperForm1" method="post" class="paperForm1 currentForm">
 					<select class="select" name="submitionType">
-						<option value="dft">
+						<option value="dft" >
 							Select article type
 						</option>
-						<option value="research">
+						<option value="research" <?php if(isset($_ManType) && $_ManType === "research") echo 'selected' ?>>
 							Research Article
 						</option>
-						<option value="reviewArticle">
+						<option value="reviewArticle" <?php if(isset($_ManType) && $_ManType === "reviewArticle") echo 'selected' ?>>
 							Review Article
 						</option>
-						<option value="shortCommunication">
+						<option value="shortCommunication" <?php if(isset($_ManType) && $_ManType === "shortCommunication") echo 'selected' ?>>
 							Short Communication
 						</option>
-						<option value="editorial">
+						<option value="editorial" <?php if(isset($_ManType) && $_ManType === "editorial") echo 'selected' ?>>
 							Editorial
 						</option>
 					</select>
 					<label for="paperTitle">Submition title</label>
-					<input name="paperTitle" type="text" placeholder="Enter submition title">
-					<label for="paperAbstract">Submition title</label>
-					<textarea name="paperAbstract" placeholder="Enter submition abstract" class="paperAbstract" rows="15"></textarea>
+					<input name="paperTitle" type="text" placeholder="Enter submition title" 
+					value="<?php if(isset($_ManTitle)) echo $_ManTitle ?>">
+					<label for="paperAbstract">Submition abstract</label>
+					<textarea name="paperAbstract" placeholder="Enter submition abstract" class="paperAbstract" rows="15"><?php if(isset($_ManAbstract)) echo $_ManAbstract ?></textarea>
 					<label for="paperKeywords">Keywords</label>
-					<input name="paperKeywords" type="text" placeholder="Enter keywords for your submition">
-					<input type="reset" value="Clear" name="" class="btn btn-danger btn-reset"/>
+					<input name="paperKeywords" type="text" placeholder="Enter keywords seperated by comma. ie k1,k2" value="<?php if(isset($_ManKeywords)) echo $_ManKeywords ?>">
+					<input type="reset" value="Clear" name="" class="btn btn-danger btn-reset reset-Form"/>
 					<input type="submit" value="Continue" name="" class="btn btn-primary"/>
 				</form>
 			</div>

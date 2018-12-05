@@ -7,17 +7,7 @@ $(document).ready(function(){
 	});
 	//show forms on demand sumbit page
 	$('.formTrigger').click(function(){
-		var currentform = $('.currentForm');
-		var currentBar = $('.currentTrigger');
-		var targetForm = $(this).attr('target');
-		$(currentform).css('display','none');
-		$('.'+targetForm).css('display','block');
-		$(currentBar).removeClass('active');
-		$(currentBar).removeClass('currentTrigger');
-		$(currentform).removeClass('currentForm');
-		$(this).addClass('active');
-		$(this).addClass('currentTrigger');
-		$('.'+targetForm).addClass('currentForm');
+		FormTrigger(this, this);
 		
 	});
 	
@@ -64,6 +54,19 @@ $(document).ready(function(){
 		}
 		var url = baserUrl+'profile/update.php';
 		ajax_request(formData, url, 'updateProfile');
+	});
+	
+	$('.paperForm1').submit(function(e){
+		e.preventDefault();
+		var formData = new FormData(this);
+		var url = baserUrl+"submit/ManInfo.php";
+		ajax_request(formData, url, "ManInfo");
+	});
+	$('.reset-Form').click(function(e){
+		e.preventDefault();
+		var formData = new FormData();
+		var url = baserUrl+"submit/resetforms.php";
+		ajax_request(formData, url, "reset");
 	});
 });
 
@@ -119,6 +122,16 @@ function successHandle(data,regType)
 			$('.userTitle').val(data.data.salutation);
 			$('.profileDiv').css('display','block');
 		}
+		else if(regType === "reset")
+		{
+			window.location.href = baserUrl+"submit";
+		}
+		else if(regType === "ManInfo")
+		{
+//			var nextForm = $('.paperForm2');
+			FormTrigger('.triggerForm2', $('.triggerForm2'));
+		}
+			
 		else
 		{
 			alert("success done");
@@ -189,4 +202,19 @@ function progressTrack() {
    }, false);
 
    return xhr;
+}
+
+function FormTrigger(bar, formbar)
+{
+	var currentform = $('.currentForm');
+	var currentBar = $('.currentTrigger');
+	var targetForm = $(bar).attr('target');
+	$(currentform).css('display','none');
+	$('.'+targetForm).css('display','block');
+	$(currentBar).removeClass('active');
+	$(currentBar).removeClass('currentTrigger');
+	$(currentform).removeClass('currentForm');
+	$(bar).addClass('active');
+	$(formbar).addClass('currentTrigger');
+	$('.'+targetForm).addClass('currentForm');
 }
