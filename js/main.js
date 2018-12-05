@@ -52,7 +52,18 @@ $(document).ready(function(){
 	$('.changeProfile').click(function(){
 		var target = $(this).attr('target');
 		var input  = $('.'+target).val();
-		alert(input);
+		var formData = new FormData();
+		formData.append("target", target);
+		formData.append("value", input);
+		if(target === "userPassword")
+		{
+			input = $('.userPasswordOld').val();
+			var input_extra = $('.userPasswordNew').val();
+			formData.append("value", input);
+			formData.append("value_extra",input_extra);
+		}
+		var url = baserUrl+'profile/update.php';
+		ajax_request(formData, url, 'updateProfile');
 	});
 });
 
