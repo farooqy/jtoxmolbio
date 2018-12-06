@@ -5,12 +5,19 @@ $url = "http://jtoxmolbio/";
 //	header( "Location: $url" . "maintenance" );
 //	exit( 0 );
 //}
+if(isset($_SESSION["isLoggedIn"]) === false)
+{
+	header("Location: $url"."login?redirect=submit");
+	exit(0);
+}
 if(isset($_SESSION["ManInfo"]))
 {
 	$_ManType = $_SESSION["ManInfo"]["man_type"];
 	$_ManTitle = $_SESSION["ManInfo"]["man_title"];
 	$_ManAbstract = $_SESSION["ManInfo"]["man_abstract"];
 	$_ManKeywords = $_SESSION["ManInfo"]["man_keywords"];
+	$_ManStage = $_SESSION["ManInfo"]["man_stage"];
+	$_ManAuthors = $_SESSION["ManInfo"]["man_authors"];
 }
 $submitPage = true;
 ?>
@@ -42,16 +49,16 @@ $submitPage = true;
   <div class="row submitPageBox" id="content">
 	<div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 submitRightBarDiv">
 		<div class="row active formTrigger currentTrigger triggerForm1" target="paperForm1" >
-			Manuscript Information <span class="glyphicon glyphicon-ok-circle" class="paperForm2"></span>
+			Manuscript Information <span class="glyphicon <?php if(isset($_ManStage) && $_ManStage > 0) echo 'glyphicon-ok-sign'; else echo 'glyphicon-remove-circle' ?>  form1Approve" ></span>
 		</div>
 		<div class="row formTrigger triggerForm2" target="paperForm2" >
-			Authors <span class="glyphicon glyphicon-remove-circle" class="paperForm2"></span>
+			Authors <span class="glyphicon <?php if(isset($_ManStage) && $_ManStage > 1) echo 'glyphicon-ok-sign'; else echo 'glyphicon-remove-circle' ?> form2Approve" ></span>
 		</div>
 		<div class="row formTrigger triggerForm3 " target="paperForm3" >
-			Upload files <span class="glyphicon glyphicon-remove-circle" class="paperForm2"></span>
+			Upload files <span class="glyphicon <?php if(isset($_ManStage) && $_ManStage > 2) echo 'glyphicon-ok-sign'; else echo 'glyphicon-remove-circle' ?> form3Approve" ></span>
 		</div>
 		<div class="row formTrigger triggerForm4" target="paperForm4" >
-			Review and submit <span class="glyphicon glyphicon-remove-circle" class="paperForm2"></span>
+			Review and submit <span class="glyphicon <?php if(isset($_ManStage) && $_ManStage > 3) echo 'glyphicon-ok-sign'; else echo 'glyphicon-remove-circle' ?> form4Approve" ></span>
 		</div>
 	</div>
 	<div class="col-md-8 col-lg-8 col-xs-12 col-sm-12 ">
@@ -90,7 +97,7 @@ $submitPage = true;
 			</div>
 			<div class="row paperForm2">
 				<form id="paperForm2" name="paperForm2" method="post">
-				  <div class="">
+				  <div class="paperForm2">
 
 					<h3>Authors:</h3>
 
@@ -99,26 +106,73 @@ $submitPage = true;
 				  </div>
 				  <table class="row table tableAuthorInfo">
 				  	<thead>
-				  		<th>#</th>
 				  		<th>Author Information</th>
 				  		<th>Corresponding</th>
 				  		<th>X</th>
 				  	</thead>
-				  	<tbody>
-				  		<tr>
-				  			<td>1</td>
-				  			<td>Noor | Noorfarooqy@gmail.com</td>
+				  	<tbody class="authorTableBody">
+				  		<?php
+						if(isset($_ManAuthors) && is_array($_ManAuthors))
+						{
+							$numAuthors = count($_ManAuthors);
+							for($i=0; $i<$numAuthors; $i++)
+							{
+								$title = $_ManAuthors[$i]["authorTitle"];
+								$lName = $_ManAuthors[$i]["authorLastName"];
+								$email = $_ManAuthors[$i]["authorEmail"];
+								$isCorresponding = $_ManAuthors[$i]["isCorresponding"];
+								?>
+						<tr class="dynamic">
+							<td>
+								<?php echo $title." ".$lName." | ".$email ?>
+							</td>
+							<td>
+										<?php
+								if($isCorresponding === true)
+								{
+									?>
+								<span class="glyphicon glyphicon-ok-circle corresPondingAuthor" target="<?php echo $email ?>"></span> 
+									<?php
+								}
+								else
+								{
+									?>
+								<span class="glyphicon glyphicon-remove-circle corresPondingAuthor" target="<?php echo $email ?>"></span> 
+									<?php
+								}
+										?>
+							</td>
+							<td>
+								<span class="glyphicon glyphicon-remove" ></span> 
+							</td>
+						</tr>
+								<?php
+							}
+						}
+						else
+						{
+							?>
+							
+				  		<tr class="auto">
 				  			<td>
-				  				<input type="checkbox" checked name="cAuthor">
+				  			 <?php echo $_SESSION["fullname"]." | ".
+								$_SESSION["email"]?>
+							</td>
+				  			<td>
+				  				<span class="glyphicon glyphicon-ok-circle corresPondingAuthor" target="<?php echo $_SESSION["email"] ?>"></span>
+			  			
 				  			</td>
 				  			<td>
-				  				<span class="glyphicon glyphicon-remove"></span> 
+				  				<span class="glyphicon glyphicon-remove" ></span> 
 				  			</td>
 				  		</tr>
+							<?php
+						}
+						?>
 				  	</tbody>
 				  </table>
 				  <div class="authorInfoBoxDiv">
-				  	<select class="select" name="Authortitle">
+				  	<select class="select" name="authorTitle">
 						<option value="dft">
 							Select author title
 						</option>
@@ -138,22 +192,31 @@ $submitPage = true;
 							Dr.
 						</option>
 					 </select>
-					 <label for="authorTitle">Author Title<span class="superScriptStar">*</span></label>
-					 <input name="authorTitle" type="text" placeholder="Enter Author title">
+					 
+					<input type="hidden" name="cAuthor" class="cAuthor" value="<?php echo $_SESSION["email"] ?>">
 					 <label for="authorFirstName">Author first name<span class="superScriptStar">*</span></label>
 					 <input name="authorFirstName" type="text" placeholder="Author first name">
 					 <label for="authorLastName">Author last name<span class="superScriptStar">*</span></label>
 					 <input name="authorLastName" type="text" placeholder="Author last name">
-					 <label for="authorInstitution">Author institution<span class="superScriptStar">*</span></label>
-					 <input name="authorInstitution" type="text" placeholder="Author institution">
 					 <label for="authorEmail">Author Email<span class="superScriptStar">*</span></label>
 					 <input name="authorEmail" type="text" placeholder="Author Email">
+					 <label for="authorInstitution">Author institution<span class="superScriptStar">*</span></label>
+					 <input name="authorInstitution" type="text" placeholder="Author institution">
+					 <label for="authorLocation">Author Location<span class="superScriptStar">*</span></label>
+					 <input name="authorLocation" type="text" placeholder="Enter Author country">
+				 	<input type="submit" value="Add Author" name="" class="btn btn-primary "/>
 				  </div>
-				 <div class="btn btn-primary toggleAuthorBox text-center">
-				 	Add Author
+				 <div class="toggleAuthorDiv">
+				 	<div class="btn btn-primary toggleAuthorBox">Toggle Author form</div>
+				 	
+				 	
 				 </div>
-				 <input type="reset" value="Clear" name="" class="btn btn-danger btn-reset"/>
-				 <input type="submit" value="Continue" name="" class="btn btn-primary"/>
+				 <div class="btn-form2">
+					 
+				 	<input type="reset" value="Clear" name="" class="btn btn-danger btn-reset reset-Form"/>
+					 <div class="btn btn-primary  text-center">Continue</div>
+				 </div>
+					 
 			 </form>
 			</div>
    		
@@ -250,7 +313,7 @@ $submitPage = true;
    							<input type="hidden" class="manuscriptData" name="manuscriptData">
    							<input type="hidden" class="coverData" name="imageData[]">
    							<input type="hidden" class="OthersData" name="OthersData[]">
-							 <input type="reset" value="Clear" name="" class="btn btn-danger btn-reset"/>
+							 <input type="reset" value="Clear" name="" class="btn btn-danger btn-reset  reset-Form"/>
 							 <input type="submit" value="Continue" name="" class="btn btn-primary"/>
    						</form>
    					</div>
@@ -314,7 +377,7 @@ $submitPage = true;
 	   							</p>
 	   						</div>
 	   						
-							 <input type="reset" value="Clear" name="" class="btn btn-danger btn-reset"/>
+							 <input type="reset" value="Clear" name="" class="btn btn-danger btn-reset  reset-Form"/>
 							 <input type="submit" value="Finish" name="" class="btn btn-primary"/>
 	   					</form>
 	   				</div>

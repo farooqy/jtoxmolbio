@@ -56,6 +56,7 @@ $(document).ready(function(){
 		ajax_request(formData, url, 'updateProfile');
 	});
 	
+	//forms
 	$('.paperForm1').submit(function(e){
 		e.preventDefault();
 		var formData = new FormData(this);
@@ -67,6 +68,30 @@ $(document).ready(function(){
 		var formData = new FormData();
 		var url = baserUrl+"submit/resetforms.php";
 		ajax_request(formData, url, "reset");
+	});
+	$('#paperForm2').submit(function(e){
+		e.preventDefault();
+		var formData = new FormData(this);
+		formData.append("submitType", "authorAddition");
+		var url = baserUrl+"submit/AddAuthor.php";
+		ajax_request(formData, url, "AddAuthor");
+	});
+	//changing corresponding author
+	$('.corresPondingAuthor').click(function(){
+		if($(this).hasClass('glyphicon-ok-circle'))
+		{
+			$(this).removeClass('glyphicon-ok-circle');
+			$(this).addClass('glyphicon-remove-circle');
+			$('.cAuthor').val('');
+		}
+		else
+		{
+			$('.corresPondingAuthor').removeClass('glyphicon-ok-circle');
+			$('.corresPondingAuthor').addClass('glyphicon-remove-circle');
+			$(this).removeClass('glyphicon-remove-circle');
+			$(this).addClass('glyphicon-ok-circle');
+			$('.cAuthor').val($(this).attr('target'));
+		}
 	});
 });
 
@@ -130,6 +155,40 @@ function successHandle(data,regType)
 		{
 //			var nextForm = $('.paperForm2');
 			FormTrigger('.triggerForm2', $('.triggerForm2'));
+			$('.form1Approve').removeClass('glyphicon-remove-circle');
+			$('.form1Approve').addClass('glyphicon-ok-sign');
+			$('.form1Approve').css('color', 'green');
+		}
+		else if(regType === "AddAuthor")
+		{
+			var author = data.author;
+			var isCAuthor = author.isCorresponding;
+			$('.toggleAuthorBox').click();
+			FormTrigger('.triggerForm3', $('.triggerForm3'));
+			$('.form2Approve').removeClass('glyphicon-remove-circle');
+			$('.form2Approve').addClass('glyphicon-ok-sign');
+			$('.form2Approve').css('color', 'green');
+			var cAuthor = $('.cAuthor').val();
+			$("#paperForm2 input").val('');
+			$("#paperForm2 select").val($("#paperForm2 option:first").val());
+			$('.cAuthor').val(cAuthor);
+			var tr = "<tr> <td> "+author.authorTitle+" "+author.authorLastName;
+			tr = tr+" | "+author.authorEmail+"</td>";
+			var span = "";
+			if(isCAuthor)
+			{
+				$('.corresPondingAuthor').removeClass('glyphicon-ok-circle');
+				$('.corresPondingAuthor').addClass('glyphicon-remove-circle');
+				span = "<span class=\"glyphicon glyphicon-ok-circle corresPondingAuthor\" onclick=\"TriggerCorresPonding(this)\" target=\""+author.authorEmail+"\"></span> ";
+			}
+			else
+			{
+				span = "<span class=\"glyphicon glyphicon-remove-circle corresPondingAuthor\" onclick=\"TriggerCorresPonding(this)\" target=\""+author.authorEmail+"\"></span> ";
+			}
+			tr = tr+" <td> "+span+" </td>";
+			tr = tr + "<td> <span class=\"glyphicon glyphicon-remove\" ></span> </td> </tr>";
+			$('.tableAuthorInfo tr:last').after(tr);
+			alert(tr);
 		}
 			
 		else
@@ -217,4 +276,20 @@ function FormTrigger(bar, formbar)
 	$(bar).addClass('active');
 	$(formbar).addClass('currentTrigger');
 	$('.'+targetForm).addClass('currentForm');
+}
+function TriggerCorresPonding(object){
+	if($(object).hasClass('glyphicon-ok-circle'))
+	{
+		$(object).removeClass('glyphicon-ok-circle');
+		$(this).addClass('glyphicon-remove-circle');
+		$('.cAuthor').val('');
+	}
+	else
+	{
+		$('.corresPondingAuthor').removeClass('glyphicon-ok-circle');
+		$('.corresPondingAuthor').addClass('glyphicon-remove-circle');
+		$(object).removeClass('glyphicon-remove-circle');
+		$(object).addClass('glyphicon-ok-circle');
+		$('.cAuthor').val($(object).attr('target'));
+	}
 }

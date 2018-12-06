@@ -24,7 +24,19 @@ if(isset($_SESSION["isLoggedIn"]))
 			"man_completed" => false,
 			"man_token" => Get_Hash(time()),
 			"man_number" => '',
-			"man_stage" => 0
+			"man_stage" => 0,
+			"man_authors" => array(
+				array(
+					"authorTitle" => $_SESSION["salutation"],
+					"authorFirstName" => $_SESSION["firstname"],
+					"authorLastName" =>$_SESSION["lastname"],
+					"authorLocation" => $_SESSION["country"],
+					"authorInstitution" => $_SESSION["institute"],
+					"authorEmail" => $_SESSION["email"],
+					"authorToken" => $userToken,
+					"isCorresponding" => true,
+				),
+			),
 		);
 		
 		$table = "users";

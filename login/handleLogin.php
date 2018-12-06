@@ -53,6 +53,9 @@ else if(isset($_POST["loginUser"]))
 			$_SESSION["isLoggedIn"] = true;
 			$_SESSION["veriftoken"] = $user[0]["veriftoken"];
 			$_SESSION["email"] = $user[0]["email"];
+			$_SESSION["salutation"] = $user[0]["salutation"];
+			$_SESSION["firstname"] = $user[0]["firstName"];
+			$_SESSION["lastname"] = $user[0]["secondName"];
 			$_SESSION["fullname"] = $user[0]["salutation"]." ".$user[0]["secondName"];
 			$_SESSION["country"] = $user[0]["country"];
 			$_SESSION["institute"] = $user[0]["Institution"];

@@ -198,7 +198,7 @@ body {
 .formTrigger {
 	cursor: pointer;
 }
-#paperForm1 input , #paperForm1 select , #paperForm1 textarea , #paperForm2 input , #paperForm2 select  { 
+#paperForm1 input , #paperForm1 select , #paperForm1 textarea , #paperForm2 input , #paperForm2 select , #paperForm2 .toggleAuthorDiv .btn, #paperForm2 .btn-form2 .btn-primary { 
 	display: block;
 	height: 45px;
 	border:thin solid #A49D9D;
@@ -215,14 +215,16 @@ body {
 	resize: none;
 	height: 300px;
 }
-#paperForm1 .btn {
+#paperForm1 .btn , #paperForm2 .btn{
 	display: inline;
 	width: 30%;
+	margin-top: 30px;
 }
-#paperForm1 .btn-primary {
+#paperForm1 .btn-primary , #paperForm2 .btn-primary {
 	background-color: aquamarine;
 	color:black;
 	width: 50%;
+	margin-top: 30px;
 }
 #paperForm1 .btn {
 	box-shadow: 0px 0px 0px 0px #000000;
@@ -265,7 +267,7 @@ body {
 #paperForm2 table tbody tr td{
 	border-right: thin solid gray;
 }
-#paperForm2 table tbody tr td span{
+#paperForm2 table tbody tr td .glyphicon-remove{
 	color:red;
 	cursor: pointer;
 }
@@ -273,16 +275,31 @@ body {
 	height: 25px;
 	width: 25px;
 }
+#paperForm2 .btn-form2 {
+	margin-top-:20px;
+}
 .authorInfoBoxDiv {
 	display: none;
 }
-.toggleAuthorBox {
-	margin-left: 40%;
-	margin-bottom: 20px;
-	width: 150px;
+#paperForm2 .toggleAuthorDiv .btn-primary  {
+	display: inline-block;
+	height: 45px;
 	background-color: #16FF80;
+	width: 30%;
 	color: black;
 	font-weight: bold;
+}
+#paperForm2 .toggleAuthorDiv .btn-primary {
+	background-color: #00b991;
+	color:white;
+}
+#paperForm2 .btn-form2 .btn {
+	display: inline-block;
+	width: 30%;
+	margin-right: 10px;
+}
+.corresPondingAuthor {
+	cursor: pointer;
 }
 
 .uploadDivBox {

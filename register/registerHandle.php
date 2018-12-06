@@ -102,6 +102,9 @@ if(isset($_POST["registerUser"]))
 				$_SESSION["isLoggedIn"] = true;
 				$_SESSION["veriftoken"] = $verifToken;
 				$_SESSION["email"] = $userData[0];
+				$_SESSION["salutation"] = $user[0]["salutation"];
+				$_SESSION["firstname"] = $user[0]["firstName"];
+				$_SESSION["lastname"] = $user[0]["secondName"];
 				$_SESSION["fullname"] = $userData[1]." ".$userData[3];
 				$_SESSION["country"] = $userData[8];
 				$_SESSION["institute"] = $userData[6];
