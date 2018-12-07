@@ -76,6 +76,21 @@ $(document).ready(function(){
 		var url = baserUrl+"submit/AddAuthor.php";
 		ajax_request(formData, url, "AddAuthor");
 	});
+	$('.uploadForm3').submit(function(e){
+		e.preventDefault();
+		var formData = new FormData();
+		formData.append("submitType" , "completeForm3");
+		var url = baserUrl+"submit/passForm3.php";
+		ajax_request(formData, url, "passForm3");
+	});
+	$('.continueForm2').click(function(){
+		var formData = new FormData();
+		var cAuthor = $('.cAuthor').val();
+		formData.append("cAuthor",cAuthor);
+		formData.append("submitType", "continueForm2");
+		var url = baserUrl+"submit/passForm2.php";
+		ajax_request(formData, url, "passForm2");
+	});
 	//changing corresponding author
 	$('.corresPondingAuthor').click(function(){
 		if($(this).hasClass('glyphicon-ok-circle'))
@@ -92,6 +107,33 @@ $(document).ready(function(){
 			$(this).addClass('glyphicon-ok-circle');
 			$('.cAuthor').val($(this).attr('target'));
 		}
+	});
+	// uploads triiger
+	$('.triggerUpload').click(function(){
+		var target = $(this).attr('target');
+		var types = ".png, .jpg, .jpeg";
+		if(target === "manuscript" || target === "cover")
+		{
+			types = ".docx, .doc";
+		}
+		$('.triggerFileOpen').attr('accept', types);
+		$("form input[name='textHidden']").val(target);
+		$('.triggerFileOpen').click();
+		
+	
+		
+	});
+	$('.triggerFileOpen').change(function(){
+		setTimeout($('.uploadFormMan').submit(),10000);
+		
+		
+	});
+	$('.uploadFormMan').submit(function(e){
+		e.preventDefault();
+		var formData = new FormData(this);
+		formData.append('submitType', "uploadFile");
+		var url = baserUrl+"submit/UploadFile.php";
+		ajax_request(formData, url, "uploadFile");
 	});
 });
 
@@ -164,14 +206,12 @@ function successHandle(data,regType)
 			var author = data.author;
 			var isCAuthor = author.isCorresponding;
 			$('.toggleAuthorBox').click();
-			FormTrigger('.triggerForm3', $('.triggerForm3'));
-			$('.form2Approve').removeClass('glyphicon-remove-circle');
-			$('.form2Approve').addClass('glyphicon-ok-sign');
-			$('.form2Approve').css('color', 'green');
 			var cAuthor = $('.cAuthor').val();
 			$("#paperForm2 input").val('');
 			$("#paperForm2 select").val($("#paperForm2 option:first").val());
 			$('.cAuthor').val(cAuthor);
+			$("#paperForm2 input:submit").val("Add Author");
+			$("#paperForm2 input:reset").val("Reset");
 			var tr = "<tr> <td> "+author.authorTitle+" "+author.authorLastName;
 			tr = tr+" | "+author.authorEmail+"</td>";
 			var span = "";
@@ -190,7 +230,29 @@ function successHandle(data,regType)
 			$('.tableAuthorInfo tr:last').after(tr);
 			alert(tr);
 		}
-			
+		else if(regType === "passForm2")
+		{
+			FormTrigger('.triggerForm3', $('.triggerForm3'));
+			$('.form2Approve').removeClass('glyphicon-remove-circle');
+			$('.form2Approve').addClass('glyphicon-ok-sign');
+			$('.form2Approve').css('color', 'green');
+		}
+		else if(regType === "uploadFile")
+		{
+			var file = data.fileDetails;
+			var tr = "<tr> <td>"+file.f_name+"</td>";
+			tr = tr + "<td> "+file.f_cate+"</td>";
+			tr = tr + "<td> uploaded </td>";
+			tr = tr + "<td> <span class=\"glyphicon glyphicon-remove-sign\"> </span> </td>";
+			$('.manuscriptTableBody').append(tr);
+		}
+		else if(regType === "passForm3")
+		{
+			FormTrigger('.triggerForm4', $('.triggerForm4'));
+			$('.form3Approve').removeClass('glyphicon-remove-circle');
+			$('.form3Approve').addClass('glyphicon-ok-sign');
+			$('.form3Approve').css('color', 'green');
+		}
 		else
 		{
 			alert("success done");

@@ -29,4 +29,12 @@
 	.submitPageBox {
 		margin-top: 0px;
 	}
+	/* form2*/
+	.paperForm2 table , .tablePreviewSubmition, .tableManuscript {
+		font-size: 13px;
+	}
+	#paperForm2 .toggleAuthorDiv .btn-primary {
+		width: 50%;
+		max-width: 50%;
+	}
 }

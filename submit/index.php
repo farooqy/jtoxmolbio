@@ -18,6 +18,8 @@ if(isset($_SESSION["ManInfo"]))
 	$_ManKeywords = $_SESSION["ManInfo"]["man_keywords"];
 	$_ManStage = $_SESSION["ManInfo"]["man_stage"];
 	$_ManAuthors = $_SESSION["ManInfo"]["man_authors"];
+	if(isset($_SESSION["ManInfo"]["ManDocument"]))
+		$_ManDocuments = $_SESSION["ManInfo"]["ManDocument"];
 }
 $submitPage = true;
 ?>
@@ -214,7 +216,7 @@ $submitPage = true;
 				 <div class="btn-form2">
 					 
 				 	<input type="reset" value="Clear" name="" class="btn btn-danger btn-reset reset-Form"/>
-					 <div class="btn btn-primary  text-center">Continue</div>
+					 <div class="btn btn-primary  text-center continueForm2">Continue</div>
 				 </div>
 					 
 			 </form>
@@ -250,19 +252,19 @@ $submitPage = true;
 					</div>
    					
    					<div class="row uploadTriggers">
-   						<button class="btn" >
+   						<button class="btn triggerUpload" target="manuscript" >
    						<span class=" glyphicon glyphicon-book"></span>
    						Manuscript
    						</button>
-   						<button class="btn ">
+   						<button class="btn triggerUpload" target="cover" >
    						<span class=" glyphicon glyphicon-paperclip"></span>
    						Cover
    						</button>
-   						<button class="btn ">
+   						<button class="btn triggerUpload" target="figures" >
    						<span class=" glyphicon glyphicon-camera"></span>
    						Figures
    						</button>
-   						<button class="btn ">
+   						<button class="btn triggerUpload" target="others" >
    						<span class=" glyphicon glyphicon-tasks"></span>
    						Others
    						</button>
@@ -270,15 +272,77 @@ $submitPage = true;
    					<div class="row">
    						<table class="table tableManuscript">
    							<thead class="thead">
-   								<th>#</th>
    								<th>Name</th>
    								<th>Type</th>
    								<th>Status</th>
-   								<th>Remove</th>
+   								<th><b>X</b></th>
    							</thead>
-   							<tbody>
+   							<tbody class="manuscriptTableBody">
+				<?php
+				$docs = array("manuscript", "cover", "figures", "others");
+				foreach($docs as $key => $docType)
+				{
+//					echo "checking  $docType <br> ";
+					if(isset($_ManDocuments[$docType]) )
+					{
+//						echo "$docType is ready <br>";
+						$files = $_ManDocuments[$docType];
+						?>
+						<tr>
+							<?php
+						if($key === 2 || $key === 3)
+						{
+							
+							foreach($files as $fkey => $file)
+							{
+								$fname = $file["name"];
+								$fcate = $file["cate"];
+								?>
+								<td>
+									<?php echo $fname ?>
+								</td>
+								<td>
+									<?php echo $fcate ?>
+								</td>
+								<td>
+									uploaded
+								</td>
+								<td>
+									<span class="glyphicon glyphicon-remove-sign"></span>
+								</td>
+								<?php
+							}
+						}
+						else
+						{
+							$fname = $files["name"];
+							$fcate = $files["cate"];
+							?>
+							<td>
+								<?php echo $fname ?>
+							</td>
+							<td>
+								<?php echo  $fcate ?>
+							</td>
+							<td>
+								uploaded
+							</td>
+							<td>
+								<span class="glyphicon glyphicon-remove-sign"></span>
+							</td>
+							<?php
+						}
+						
+							?>
+						</tr>
+						<?php
+						
+					}
+				}
+
+				?>
+<!--
 								<tr>
-									<td>1</td>
 									<td>Master.docx</td>
 									<td>Manuscript</td>
 									<td>Uploaded</td>
@@ -286,26 +350,13 @@ $submitPage = true;
 
 									</span></td>
 								</tr>
-								<tr>
-									<td>1</td>
-									<td>Master.docx</td>
-									<td>Manuscript</td>
-									<td>Uploaded</td>
-									<td><span class="glyphicon glyphicon-remove-sign">
-
-									</span></td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Master.docx</td>
-									<td>Manuscript</td>
-									<td>Uploaded</td>
-									<td><span class="glyphicon glyphicon-remove-sign">
-
-									</span></td>
-								</tr>
+-->
 							</tbody>
    						</table>
+   						<form class="uploadFormMan" enctype="multipart/form-data">
+   							<input type="file" class="hidden triggerFileOpen" name="FileType">
+   							<input type="hidden" value="hiddenMe" name="textHidden" class="targetFileName">
+   						</form>
 							
    					</div>
    					<div class="row">
@@ -329,7 +380,22 @@ $submitPage = true;
 	   				</div>
 	   				<div class="row reviewSubmitionLink">
 	   					<span class="glyphicon glyphicon-file"></span>
-	   					<a href="">Preview Document </a>
+	   					<?php
+						if(isset($_ManDocuments["manuscript"]))
+						{
+							$_ManUrl = $_ManDocuments["manuscript"]["url"];
+							?>
+							<a href="<?php echo $_ManUrl ?>" target="_blank">Preview Document </a>
+							<?php
+						}
+						else
+						{
+							?>
+							<a href="">Preview Document </a>
+							<?php
+						}
+						?>
+	   					
 	   				</div>
 	   				<div class="row">
 	   					Submitted Files
@@ -339,8 +405,76 @@ $submitPage = true;
 	   						<th>Name</th>
 	   						<th>Type</th>
 	   						<th>Status</th>
+	   						<td><b>X</b></td>
 	   					</thead>
 	   					<tbody>
+	   					
+	   					
+				<?php
+				$docs = array("manuscript", "cover", "figures", "others");
+				foreach($docs as $key => $docType)
+				{
+//					echo "checking  $docType <br> ";
+					if(isset($_ManDocuments[$docType]) )
+					{
+//						echo "$docType is ready <br>";
+						$files = $_ManDocuments[$docType];
+						?>
+						<tr>
+							<?php
+						if($key === 2 || $key === 3)
+						{
+							
+							foreach($files as $fkey => $file)
+							{
+								$fname = $file["name"];
+								$fcate = $file["cate"];
+								?>
+								<td>
+									<?php echo $fname ?>
+								</td>
+								<td>
+									<?php echo $fcate ?>
+								</td>
+								<td>
+									uploaded
+								</td>
+								<td>
+									<span class="glyphicon glyphicon-remove-sign"></span>
+								</td>
+								<?php
+							}
+						}
+						else
+						{
+							$fname = $files["name"];
+							$fcate = $files["cate"];
+							?>
+							<td>
+								<?php echo $fname ?>
+							</td>
+							<td>
+								<?php echo  $fcate ?>
+							</td>
+							<td>
+								uploaded
+							</td>
+							<td>
+								<span class="glyphicon glyphicon-remove-sign"></span>
+							</td>
+							<?php
+						}
+						
+							?>
+						</tr>
+						<?php
+						
+					}
+				}
+
+				?>
+	   					
+<!--
 	   						<tr>
 	   							<td>Maaster.docx</td>
 	   							<td>Manuscript</td>
@@ -356,6 +490,7 @@ $submitPage = true;
 	   							<td>Figure</td>
 	   							<td>Uploaded</td>
 	   						</tr>
+-->
 	   					</tbody>
 	   				</table>
 	   				<div class="row ">
@@ -365,7 +500,7 @@ $submitPage = true;
 	   								By Clicking on <b>Finish</b> you agree that you have:-
 	   								<ol>
 	   									<li>
-	   										Followed all respective guidelines during submission
+	   										Followed all respective <b><a href="<?php echo  $url.'authors'?>" target="_blank">guidelines</a></b> during submission
 	   									</li>
 	   									<li>
 	   										Carefully reviewed your submission.

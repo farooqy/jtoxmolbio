@@ -32,7 +32,7 @@ if(isset($_SESSION["isLoggedIn"]))
 					"authorLastName" =>$_SESSION["lastname"],
 					"authorLocation" => $_SESSION["country"],
 					"authorInstitution" => $_SESSION["institute"],
-					"authorEmail" => $_SESSION["email"],
+					"authorEmail" => $userEmail,
 					"authorToken" => $userToken,
 					"isCorresponding" => true,
 				),
@@ -68,7 +68,12 @@ if(isset($_SESSION["isLoggedIn"]))
 				{
 					$errorMessage = "The ".$manFieldNames[$manKey]." is empty";
 					break;
-				}	
+				}
+				else if($manKey === 0 && $manValue === "dft")
+				{
+					$errorMessage = "The manuscript type must be specified";
+					break;
+				}
 				else
 				{
 					$sessKey = $sessionNames[$manKey];

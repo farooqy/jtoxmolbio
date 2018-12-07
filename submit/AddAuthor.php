@@ -11,6 +11,7 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 	$userToken = $_SESSION["veriftoken"];
 	$userEmail = $_SESSION["email"];
 	$_stage = $_SESSION["ManInfo"]["man_stage"];
+	$_existingAuthors = array_column($_SESSION["ManInfo"]["man_authors"], "authorEmail");
 	if(empty($userToken))
 		$errorMessage = "Incomplete data token to verify account";
 	else if(empty($userEmail))
@@ -21,7 +22,7 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 	}
 	else if(isset($_SESSION["ManInfo"]["man_authors"]) === false )
 		$errorMessage = "The manuscript authors have  not been initiated";
-	else if(is_array($_SESSION["ManInfo"]["man_authors"]) === false)
+	else if(is_array($_SESSION["ManInfo"]["man_authors"]) === false || is_array($_existingAuthors) === false)
 		$errorMessage = "The manuscript authors is initiated to invalid type. Please contact admin";
 	else if(isset($_POST["submitType"]) && $_POST["submitType"] === "authorAddition" && isset($_POST["cAuthor"]))
 	{
@@ -55,6 +56,11 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 				$errorMessage = "The ".$fieldNames[$fieldKey]. " is not a valid email";
 				break;
 			}
+			else if($fieldKey === 4 && in_array(Validate_Email($value), $_existingAuthors))
+			{
+				$errorMessage = "The author email already exist among authors. Please use different email";
+				break;
+			}
 			else
 			{
 				if($fieldKey === 4)
@@ -78,9 +84,6 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 				$singleAuthor["authorToken"] = $authorToken;
 				array_push($Authors, $singleAuthor);
 				$_SESSION["ManInfo"]["man_authors"] = $Authors;
-				if($_stage === 1) 
-					$_stage = $_stage +1;
-				$_SESSION["ManInfo"]["man_stage"] = $_stage;
 				$isSuccess = true;
 				$successMessage = "success";
 			}
