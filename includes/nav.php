@@ -39,10 +39,9 @@ $ccLincese = $url."uploads/sitefiles/icons/cclicense.png";
  		    <div class="collapse navbar-collapse" id="inverseNavbar1">
  		      <ul class="nav navbar-nav">
  		        <li class="<?php if(isset($homePage)) echo 'active' ?>"><a href="<?php echo $url ?>">Home<span class="sr-only">(current)</span></a></li>
- 		        <li class="<?php if(isset($submitPage)) echo 'active' ?>"><a href="<?php echo $submit ?>">Submit</a></li>
+ 		        <li class="<?php if(isset($submitPage)) echo 'active' ?>"><a href="<?php echo $submit ?>">Submit Manuscript</a></li>
  		        <li class="<?php if(isset($archivePage)) echo 'active' ?>"><a href="<?php echo $archive ?>">Archive</a></li>
- 		        <li class="<?php if(isset($trackPage)) echo 'active' ?>"><a href="<?php echo $trackpaper  ?>">Track Paper</a></li>
- 		        <li class="<?php if(isset($contactPage)) echo 'active' ?>"><a href="<?php echo $contactus  ?>">Contact</a></li>
+				<li class="<?php if(isset($editorialPage)) echo 'active' ?>"><a href="<?php echo $editorial ?>">Editorial Board</a></li>
 <!--
  		        <li><a href="#">About Us</a></li>
 				<li><a href="#">Authors</a></li>
@@ -50,9 +49,10 @@ $ccLincese = $url."uploads/sitefiles/icons/cclicense.png";
 -->
  		        <li class="dropdown "><a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More<span class="caret"></span></a>
  		        <ul class="dropdown-menu">
+ 		        <li class="<?php if(isset($trackPage)) echo 'active' ?>"><a href="<?php echo $trackpaper  ?>">Track Paper</a></li>
 				<li class="<?php if(isset($aboutPage)) echo 'active' ?>"><a href="<?php echo $aboutus  ?>">About Us</a></li>
 				<li class="<?php if(isset($authorPage)) echo 'active' ?>"><a href="<?php echo $authors ?>">For Authors</a></li>
-				<li class="<?php if(isset($editorialPage)) echo 'active' ?>"><a href="<?php echo $editorial ?>">Editorial Board</a></li>
+ 		        <li class="<?php if(isset($contactPage)) echo 'active' ?>"><a href="<?php echo $contactus  ?>">Contact</a></li>
 <!-- 		            <li role="separator" class="divider"></li>-->
 	            </ul>
 	            </li>
