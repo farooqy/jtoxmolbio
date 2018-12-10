@@ -145,7 +145,7 @@ $submitPage = true;
 										?>
 							</td>
 							<td>
-								<span class="glyphicon glyphicon-remove" ></span> 
+								<span class="glyphicon glyphicon-remove removeAuthor" target="<?php echo $email ?>"></span> 
 							</td>
 						</tr>
 								<?php

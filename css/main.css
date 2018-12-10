@@ -137,9 +137,11 @@ body {
 .aboutUsContent  .row {
 	padding-left: 40px;
 	padding-right: 80px;
+	text-align: justify;
 }
 .authorsPageBox {
 	font-size:21px;
+	text-align: justify;
 }
 .authorsPageBox .pdf-Authors{
 	font-size:150px;
@@ -183,6 +185,7 @@ body {
 }
 .submitPageBox {
 	margin-top: 60px;
+	text-align: justify;
 }
 #paperForm1, #paperForm2 {
 	background-color: #ffffff;

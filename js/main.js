@@ -135,6 +135,11 @@ $(document).ready(function(){
 		var url = baserUrl+"submit/UploadFile.php";
 		ajax_request(formData, url, "uploadFile");
 	});
+	
+	//remove author
+	$('.removeAuthor').click(function(){
+		removeAuthor($(this));
+	});
 });
 
 
@@ -220,14 +225,14 @@ function successHandle(data,regType)
 				$('.corresPondingAuthor').removeClass('glyphicon-ok-circle');
 				$('.corresPondingAuthor').addClass('glyphicon-remove-circle');
 				span = "<span class=\"glyphicon glyphicon-ok-circle corresPondingAuthor\" onclick=\"TriggerCorresPonding(this)\" target=\""+author.authorEmail+"\"></span> ";
-			}
+			} 
 			else
 			{
 				span = "<span class=\"glyphicon glyphicon-remove-circle corresPondingAuthor\" onclick=\"TriggerCorresPonding(this)\" target=\""+author.authorEmail+"\"></span> ";
 			}
 			tr = tr+" <td> "+span+" </td>";
-			tr = tr + "<td> <span class=\"glyphicon glyphicon-remove\" ></span> </td> </tr>";
-			$('.tableAuthorInfo tr:last').after(tr);
+			tr = tr + "<td> <span class=\"glyphicon glyphicon-remove\" onclick=\"removeAuthor(this)\" target=\""+author.authorEmail+"\" ></span> </td> </tr>";
+			$('.authorTableBody').append(tr);
 			alert(tr);
 		}
 		else if(regType === "passForm2")
@@ -323,6 +328,16 @@ function progressTrack() {
    }, false);
 
    return xhr;
+}
+
+function removeAuthor(base)
+{
+	var target = $(base).attr('target');
+	var formData = new FormData();
+	formData.append('target', target);
+	var url = baserUrl+'submit/alterAuthor.php';
+	formData.append('submitType', 'authorLevelAlter');
+	ajax_request(formData, url, 'authorLevelAlter');
 }
 
 function FormTrigger(bar, formbar)
