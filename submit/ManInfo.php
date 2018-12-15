@@ -15,6 +15,8 @@ if(isset($_SESSION["isLoggedIn"]))
 		$errorMessage = "Incomplete data token to verify account";
 	else if(empty($userEmail))
 		$errorMessage = "Incomplete data to verify account";
+	else if(isset($_SESSION["ManInfo"]["man_stage"]) && $_SESSION["ManInfo"]["man_stage"] >= 1)
+		$errorMessage = "You have already submitted the manuscript info before. Please reset before submitting again, or click authors to continue";
 	else
 	{
 		require_once($root."classes/SuperClass.php");
@@ -83,7 +85,7 @@ if(isset($_SESSION["isLoggedIn"]))
 		}
 		if($errorMessage === null &&  empty($errorMessage))
 		{
-			$ManInfo["man_stage"] = $ManInfo["man_stage"]+1;
+			$ManInfo["man_stage"] =1;
 			$_SESSION["ManInfo"] = $ManInfo;
 			$isSuccess = true;
 			$successMessage = "success";
@@ -92,7 +94,8 @@ if(isset($_SESSION["isLoggedIn"]))
 	echo json_encode(array(
 		"errorMessage" => $errorMessage,
 		"isSuccess" => $isSuccess,
-		"successMessage" => $successMessage
+		"successMessage" => $successMessage,
+		"stage" => $ManInfo["man_stage"] =1
 	));
 	exit(0);
 }

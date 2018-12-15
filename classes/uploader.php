@@ -25,7 +25,7 @@ class Uploader
   
   public function __construct($file_array)
   {
-    $this->_name = $file_array["f_name"];
+    $this->_name = hash('md5', time(), false).'-'.$file_array["f_name"];
     $this->_type = $file_array["f_type"];
     $this->_size = $file_array["f_size"];
     $this->_temp = $file_array["f_temp"];

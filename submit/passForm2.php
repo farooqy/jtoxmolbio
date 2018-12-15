@@ -51,7 +51,8 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 		"errorMessage" => $errorMessage,
 		"isSuccess" => $isSuccess,
 		"successMessage" => $successMessage,
-		"author" => $singleAuthor
+		"author" => $singleAuthor,
+		"stage" => $_SESSION["ManInfo"]["man_stage"],
 	));
 	exit(0);
 }

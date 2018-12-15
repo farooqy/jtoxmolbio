@@ -341,11 +341,12 @@ body {
 .tableManuscript thead {
 	background-color: #16FF80;
 }
+/*
 .tableManuscript tbody tr:nth-child(odd) {
-	background-color: #A584CB;
 	color:black;
 	border-bottom: thin solid gray;
 }
+*/
 .tableManuscript tbody tr .glyphicon-remove-sign {
 	color:red;
 	cursor: pointer;
@@ -386,6 +387,9 @@ body {
 }
 .reviewDivBox .tablePreviewSubmition tbody tr{
 	border:thin solid #ECDEDE;
+}.reviewDivBox .tablePreviewSubmition tbody tr td .glyphicon:hover{
+	color: red;
+	cursor: pointer;
 }
 .reviewDivBox .paperForm4 .btn-danger {
 	width: 40%;

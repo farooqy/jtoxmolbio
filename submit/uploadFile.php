@@ -30,6 +30,8 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 		$giveType = Sanitize_String($_POST["textHidden"]);
 		if(in_array($giveType, $allowedTypes) === false)
 			$errorMessage = "The given type is not valid";
+		if(isset($_SESSION["ManInfo"]["ManDocument"][$giveType]["dir"]) &&($giveType === "manuscript" || $giveType === "cover") )
+			$errorMessage = "Please remove the existing $giveType before uploading another one.";
 		else
 		{
 			require_once($root."classes/uploader.php");
@@ -77,32 +79,35 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 				else
 				{
 					$fileUrl = $Uploader->get_file_url();
-					if($giveType === "figures" || $giveType === "others")
-						$_SESSION["ManInfo"]["ManDocument"][$giveType] = array( 
-							array(
-								"url" => $fileUrl["url"],
-								"type" => $fileUrl["type"],
-								"size" => $fileUrl["size"],
-								"dir" => $fileUrl["dir"],
-								"name" => $_uploadFile["f_name"],
-								"cate" => $_uploadFile["f_cate"],
-							),
-						);
-					else
-						$_SESSION["ManInfo"]["ManDocument"][$giveType] = array(
+					$singleAuthor = array(
 							"url" => $fileUrl["url"],
 							"type" => $fileUrl["type"],
 							"size" => $fileUrl["size"],
 							"dir" => $fileUrl["dir"],
 							"name" => $_uploadFile["f_name"],
 							"cate" => $_uploadFile["f_cate"],
+							"fileToken" => Get_Hash(time())
 						);
+					if($giveType === "figures" || $giveType === "others")
+					{
+						if(isset($_SESSION["ManInfo"]["ManDocument"][$giveType]) === false)
+						{
+							$_SESSION["ManInfo"]["ManDocument"][$giveType] = array();
+						}
+					
+						array_push(
+							$_SESSION["ManInfo"]["ManDocument"][$giveType], $singleAuthor
+						);
+					}	
+					else
+						$_SESSION["ManInfo"]["ManDocument"][$giveType] = $singleAuthor;
 					$isSuccess = true;
 					$successMessage = "success";
 				}
+//				$singleAuthor = $_SESSION["ManInfo"]["ManDocument"][$giveType];
 			}
 		}
-		$singleAuthor = $_uploadFile;
+		
 	}
 	else
 		$errorMessage = "submition type is altered. Please try again";
@@ -111,6 +116,7 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 		"isSuccess" => $isSuccess,
 		"successMessage" => $successMessage,
 		"fileDetails" => $singleAuthor,
+		"stage" => $_SESSION["ManInfo"]["man_stage"],
 //		"data" => $_FILES
 	));
 	exit(0);

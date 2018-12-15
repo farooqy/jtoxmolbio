@@ -20,6 +20,8 @@ if(isset($_SESSION["ManInfo"]))
 	$_ManAuthors = $_SESSION["ManInfo"]["man_authors"];
 	if(isset($_SESSION["ManInfo"]["ManDocument"]))
 		$_ManDocuments = $_SESSION["ManInfo"]["ManDocument"];
+//	print_r($_ManDocuments)
+	
 }
 $submitPage = true;
 ?>
@@ -47,11 +49,11 @@ $submitPage = true;
   <div class="row" id="header">
   	<?php require($root."includes/nav.php"); ?>
   </div>
-  
+  <?php if(isset($_ManStage)) var_dump($_ManStage);?>
   <div class="row submitPageBox" id="content">
 	<div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 submitRightBarDiv">
 		<div class="row active formTrigger currentTrigger triggerForm1" target="paperForm1" >
-			Manuscript Information <span class="glyphicon <?php if(isset($_ManStage) && $_ManStage > 0) echo 'glyphicon-ok-sign'; else echo 'glyphicon-remove-circle' ?>  form1Approve" ></span>
+			Manuscript Information <span class="glyphicon <?php if(isset($_ManStage) && $_ManStage > 0 ) echo 'glyphicon-ok-sign'; else echo 'glyphicon-remove-circle' ?>  form1Approve" ></span>
 		</div>
 		<div class="row formTrigger triggerForm2" target="paperForm2" >
 			Authors <span class="glyphicon <?php if(isset($_ManStage) && $_ManStage > 1) echo 'glyphicon-ok-sign'; else echo 'glyphicon-remove-circle' ?> form2Approve" ></span>
@@ -295,8 +297,15 @@ $submitPage = true;
 							
 							foreach($files as $fkey => $file)
 							{
+								if($fkey > 0)
+								{
+									?>
+									<tr>
+									<?php
+								}
 								$fname = $file["name"];
 								$fcate = $file["cate"];
+								$fhash = $file["fileToken"];
 								?>
 								<td>
 									<?php echo $fname ?>
@@ -308,15 +317,22 @@ $submitPage = true;
 									uploaded
 								</td>
 								<td>
-									<span class="glyphicon glyphicon-remove-sign"></span>
+									<span class="glyphicon glyphicon-remove-sign file-remove <?php echo $fcate.'-castrate' ?>" target="<?php echo $fcate ?>" data="<?php echo $fname.'|'.$fhash ?>" data-role="masterFile" onclick="removeFile(this)"></span>
 								</td>
 								<?php
+								if($fkey > 0)
+								{
+									?>
+									</tr>
+									<?php
+								}
 							}
 						}
 						else
 						{
 							$fname = $files["name"];
 							$fcate = $files["cate"];
+							$fhash = $files["fileToken"];
 							?>
 							<td>
 								<?php echo $fname ?>
@@ -328,7 +344,7 @@ $submitPage = true;
 								uploaded
 							</td>
 							<td>
-								<span class="glyphicon glyphicon-remove-sign"></span>
+								<span class="glyphicon glyphicon-remove-sign file-remove <?php echo $fcate.'-castrate' ?>" target="<?php echo $fcate ?>" data="<?php echo $fname.'|'.$fhash ?>" data-role="masterFile" onclick="removeFile(this)"></span>
 							</td>
 							<?php
 						}
@@ -385,13 +401,13 @@ $submitPage = true;
 						{
 							$_ManUrl = $_ManDocuments["manuscript"]["url"];
 							?>
-							<a href="<?php echo $_ManUrl ?>" target="_blank">Preview Document </a>
+							<a class="previewManUrl" href="<?php echo $_ManUrl ?>" target="_blank">Preview Document </a>
 							<?php
 						}
 						else
 						{
 							?>
-							<a href="">Preview Document </a>
+							<a class="previewManUrl" ="">Preview Document </a>
 							<?php
 						}
 						?>
@@ -407,7 +423,7 @@ $submitPage = true;
 	   						<th>Status</th>
 	   						<td><b>X</b></td>
 	   					</thead>
-	   					<tbody>
+	   					<tbody class="tableReviewBody">
 	   					
 	   					
 				<?php
@@ -427,8 +443,15 @@ $submitPage = true;
 							
 							foreach($files as $fkey => $file)
 							{
+								if($fkey > 0)
+								{
+									?>
+									</tr>
+									<?php
+								}
 								$fname = $file["name"];
 								$fcate = $file["cate"];
+								$fhash = $file["fileToken"];
 								?>
 								<td>
 									<?php echo $fname ?>
@@ -440,15 +463,22 @@ $submitPage = true;
 									uploaded
 								</td>
 								<td>
-									<span class="glyphicon glyphicon-remove-sign"></span>
+									<span class="glyphicon glyphicon-remove-sign file-remove <?php echo $fcate.'-castrate' ?>" target="<?php echo $fcate ?>" data="<?php echo $fname.'|'.$fhash ?>" data-role="slaveFile" onclick="removeFile(this)"></span>
 								</td>
 								<?php
+								if($fkey > 0)
+								{
+									?>
+									</tr>
+									<?php
+								}
 							}
 						}
 						else
 						{
 							$fname = $files["name"];
 							$fcate = $files["cate"];
+							$fhash = $files["fileToken"];
 							?>
 							<td>
 								<?php echo $fname ?>
@@ -460,7 +490,7 @@ $submitPage = true;
 								uploaded
 							</td>
 							<td>
-								<span class="glyphicon glyphicon-remove-sign"></span>
+								<span class="glyphicon glyphicon-remove-sign file-remove <?php echo $fcate.'-castrate' ?>" target="<?php echo $fcate ?>" data="<?php echo $fname.'|'.$fhash ?>" data-role="slaveFile" onclick="removeFile(this)"></span>
 							</td>
 							<?php
 						}
@@ -498,6 +528,7 @@ $submitPage = true;
 	   						<div class="">
 	   							<p>
 	   								By Clicking on <b>Finish</b> you agree that you have:-
+
 	   								<ol>
 	   									<li>
 	   										Followed all respective <b><a href="<?php echo  $url.'authors'?>" target="_blank">guidelines</a></b> during submission

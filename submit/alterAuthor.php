@@ -46,9 +46,12 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 				$errorMessage = "Failed to get the author index. Please contact admin";
 			else 
 			{
-				$allAuthors = array_splice($_SESSION["ManInfo"]["man_authors"], $authorIndex, $authorIndex);
-				$_SESSION["ManInfo"]["man_authors"] = $allAuthors;
+				
+				unset($_SESSION["ManInfo"]["man_authors"][$authorIndex]);
+				$_SESSION["ManInfo"]["man_authors"] = array_values($_SESSION["ManInfo"]["man_authors"]);
 				$singleAuthor = $_SESSION["ManInfo"]["man_authors"];
+				$isSuccess = true;
+				$successMessage = "success";
 			}
 			
 		}
@@ -60,7 +63,8 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 		"errorMessage" => $errorMessage,
 		"isSuccess" => $isSuccess,
 		"successMessage" => $successMessage,
-		"author" => $_SESSION["ManInfo"]["man_authors"]
+		"author" => $_SESSION["ManInfo"]["man_authors"],
+//		"target" => $authorIndex
 	));
 	exit(0);
 }

@@ -136,14 +136,26 @@ $(document).ready(function(){
 		ajax_request(formData, url, "uploadFile");
 	});
 	
+	$(".paperForm4").submit(function(e){
+		e.preventDefault();
+		var formData = new FormData(this);
+		formData.append("submitType", "finalSubmition");
+		var url = baserUrl+"submit/finalSubmition.php";
+		ajax_request(formData, url, "finalSubmition");
+	});
+	
 	//remove author
 	$('.removeAuthor').click(function(){
 		removeAuthor($(this));
 	});
+	//remove file
+//	$('.file-remove').click(function(){
+//		removeFile($(this));
+//	});
 });
 
 
-function ajax_request(form, url, formType)
+function ajax_request(form, url, formType, base='')
 {
 	resetProgess();
 	$.ajax({
@@ -154,13 +166,13 @@ function ajax_request(form, url, formType)
 	contentType: false,
 	processData: false,
 	cache: false,
-	success: function(data){successHandle(data, formType);},
+	success: function(data){successHandle(data, formType, base);},
 	error: function(error){errorHandle(error);}
 		
 	});
 }
 
-function successHandle(data,regType)
+function successHandle(data,regType, base='')
 {
 	data = JSON.parse(data);
 	if(data.isSuccess === false)
@@ -245,11 +257,13 @@ function successHandle(data,regType)
 		else if(regType === "uploadFile")
 		{
 			var file = data.fileDetails;
-			var tr = "<tr> <td>"+file.f_name+"</td>";
-			tr = tr + "<td> "+file.f_cate+"</td>";
+			var tr = "<tr> <td>"+file.name+"</td>";
+			tr = tr + "<td> "+file.cate+"</td>";
 			tr = tr + "<td> uploaded </td>";
-			tr = tr + "<td> <span class=\"glyphicon glyphicon-remove-sign\"> </span> </td>";
+			tr = tr + "<td> <span class=\"glyphicon glyphicon-remove-sign\" onclick=\"removeFile(this)\" target=\""+file.cate+"\" data=\""+file.name+"|"+file.fileToken+"\" data-role=\"masterFile\"> </span> </td>";
 			$('.manuscriptTableBody').append(tr);
+			if(file.cate === "manuscript")
+				$(".previewManUrl").attr("href", file.url);
 		}
 		else if(regType === "passForm3")
 		{
@@ -257,6 +271,36 @@ function successHandle(data,regType)
 			$('.form3Approve').removeClass('glyphicon-remove-circle');
 			$('.form3Approve').addClass('glyphicon-ok-sign');
 			$('.form3Approve').css('color', 'green');
+			$(".tableReviewBody").html($('.manuscriptTableBody').html());
+			$(".tableReviewBody span").attr("data-role","slaveFile");
+			
+		}
+		else if(regType === "authorLevelAlter" || regType === "masterFile" || regType === "slaveFile")
+		{
+			$(base).parents("tr").remove();
+			if(data.target === "figures" || data.target === "manuscript" || data.target === "cover")
+			{
+				$('.form3Approve').addClass('glyphicon-remove-circle');
+				$('.form3Approve').removeClass('glyphicon-ok-sign');
+				$('.form3Approve').css('color', 'red');
+			
+			}
+			if(regType === "slaveFile")
+			{
+				$(".manuscriptTableBody").html($(".tableReviewBody").html());
+				alert("slave is clicked should change master");
+				$(".manuscriptTableBody span").attr("data-role", "masterFile")
+			}
+			else
+			{
+				$(".tableReviewBody").html($(".manuscriptTableBody").html());
+				alert("master is clicked should change slave");
+				$(".tableReviewBody span").attr("data-role", "slaveFile")
+			}
+		}
+		else if(regType === "finalSubmition")
+		{
+			alert("Submition success ");
 		}
 		else
 		{
@@ -337,9 +381,20 @@ function removeAuthor(base)
 	formData.append('target', target);
 	var url = baserUrl+'submit/alterAuthor.php';
 	formData.append('submitType', 'authorLevelAlter');
-	ajax_request(formData, url, 'authorLevelAlter');
+	ajax_request(formData, url, 'authorLevelAlter', base);
 }
-
+function removeFile(filer)
+{
+	var target = $(filer).attr('target');
+	var data = $(filer).attr('data');
+	var role = $(filer).attr("data-role");
+	var formData = new FormData();
+	var url = baserUrl+"submit/alterFile.php";
+	formData.append('submitType', 'fileLevelAlter');
+	formData.append('target', target);
+	formData.append('data', data);
+	ajax_request(formData, url, role, filer);
+}
 function FormTrigger(bar, formbar)
 {
 	var currentform = $('.currentForm');
@@ -350,6 +405,7 @@ function FormTrigger(bar, formbar)
 	$(currentBar).removeClass('active');
 	$(currentBar).removeClass('currentTrigger');
 	$(currentform).removeClass('currentForm');
+	
 	$(bar).addClass('active');
 	$(formbar).addClass('currentTrigger');
 	$('.'+targetForm).addClass('currentForm');

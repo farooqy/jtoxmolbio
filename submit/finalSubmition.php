@@ -12,6 +12,7 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 	$userEmail = $_SESSION["email"];
 	$_stage = $_SESSION["ManInfo"]["man_stage"];
 	$_existingAuthors = array_column($_SESSION["ManInfo"]["man_authors"], "authorEmail");
+	$ManInfo = $_SESSION["ManInfo"];
 	if(isset($_SESSION["ManInfo"]["ManDocument"]))
 		$uploadFiles = $_SESSION["ManInfo"]["ManDocument"];
 	else
@@ -30,7 +31,7 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 		$errorMessage = "The figures are not set. Please contact admin";
 	else if(count($uploadFiles["figures"]) <= 0)
 		$errorMessage = "Please upload at least one figure to continue";
-	else if($_stage < 2)
+	else if($_stage !== 3)
 	{
 		$errorMessage = "Please complete the Upload Files stage first";
 	}
@@ -38,12 +39,28 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 		$errorMessage = "The manuscript authors have  not been initiated";
 	else if(is_array($_SESSION["ManInfo"]["man_authors"]) === false || is_array($_existingAuthors) === false)
 		$errorMessage = "The manuscript authors is initiated to invalid type. Please contact admin";
-	else if(isset($_POST["submitType"]) && $_POST["submitType"] === "completeForm3" )
+	else if(isset($_POST["submitType"]) && $_POST["submitType"] === "finalSubmition" )
 	{
-		$_stage = 3;
-		$_SESSION["ManInfo"]["man_stage"] = $_stage;	
-		$isSuccess = true;
-		$successMessage = "success";
+		$firstStage = array("man_type", "man_title", "man_abstract", "man_keywords");
+		$uploadStage = array("manuscript", "cover", "figures", "others");
+		foreach($firstStage as $key => $manData)
+		{
+			if(empty($ManInfo[$manData]) || $ManInfo[$manData] === "dft")
+			{
+				$errorMessage = "The manuscript information stage is not complete. Please recheck you have all the required information filled";
+				break;
+			}
+		}
+		if(empty($errorMessage) && $errorMessage === null)
+		{
+			foreach($uploadStage as $stageKey => $stageValue)
+			{
+				if(isset($uploadFiles[$stageValue]))
+				{
+					
+				}
+			}
+		}
 	}
 	else
 		$errorMessage = "submition type is altered. Please try again";
@@ -51,8 +68,7 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 		"errorMessage" => $errorMessage,
 		"isSuccess" => $isSuccess,
 		"successMessage" => $successMessage,
-		"author" => $singleAuthor,
-		"stage" => $_SESSION["ManInfo"]["man_stage"],
+		"author" => $singleAuthor
 	));
 	exit(0);
 }
