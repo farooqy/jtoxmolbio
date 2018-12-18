@@ -92,7 +92,7 @@ if(isset($_POST["registerUser"]))
 		else
 		{
 			$fields = "email, salutation, firstName, secondName, password, Institution, Department, country, RegDate, subscriber_status, status, veriftoken";
-			$value = "'$userData[0]','$userData[1]','$userData[2]','$userData[3]', '$userData[5]','$userData[6]','$userData[7]','$userData[8]', '$regTime', '$userData[9]','active', '$verifToken'";
+			$value = "'$userData[0]','$userData[1]','$userData[2]','$userData[3]', '$userData[5]','$userData[6]','$userData[7]','$userData[8]', '$regTime', '$userData[9]','unverified', '$verifToken'";
 			
 			$isRegistered = $Super_Class->Super_Insert($table, $fields, $value);
 			if($isRegistered === true)

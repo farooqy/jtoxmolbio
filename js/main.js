@@ -157,6 +157,7 @@ $(document).ready(function(){
 
 function ajax_request(form, url, formType, base='')
 {
+	$('.loader-gif').css('display', 'block');
 	resetProgess();
 	$.ajax({
     xhr: function(){ return progressTrack();},
@@ -170,6 +171,10 @@ function ajax_request(form, url, formType, base='')
 	error: function(error){errorHandle(error);}
 		
 	});
+	setTimeout(function(){
+		$('.loader-gif').css('display', 'none');
+	},2000);
+	
 }
 
 function successHandle(data,regType, base='')
@@ -300,7 +305,8 @@ function successHandle(data,regType, base='')
 		}
 		else if(regType === "finalSubmition")
 		{
-			alert("Submition success ");
+			window.location.href=baserUrl+"tracks?sb=success&token="+data.mantoken;
+//			alert("Submition success ");
 		}
 		else
 		{

@@ -32,7 +32,7 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 		$errorMessage = "Please upload at least one figure to continue";
 	else if($_stage < 2)
 	{
-		$errorMessage = "Please complete the Upload Files stage first";
+		$errorMessage = "Please complete the Author info stage first";
 	}
 	else if(isset($_SESSION["ManInfo"]["man_authors"]) === false )
 		$errorMessage = "The manuscript authors have  not been initiated";

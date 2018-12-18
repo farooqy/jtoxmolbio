@@ -563,6 +563,9 @@ $submitPage = true;
 	<?php require_once($root."includes/footer.html") ?>
 </div>
 
+<div class="container-fluid loader-gif">
+	<img src="../uploads/sitefiles/icons/tv_loading.gif">
+</div>
 <script src="../js/jquery-1.11.3.min.js"></script>
 <script src="../js/bootstrap.js"></script>
 <script src="../js/main.js"></script>
