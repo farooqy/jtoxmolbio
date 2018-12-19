@@ -2,3 +2,4 @@ classes/database.php
 errors/SuperClass.error
 errors/error.log
 uploads/users/*
+classes/setJournal.php

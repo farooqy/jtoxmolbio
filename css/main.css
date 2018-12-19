@@ -37,6 +37,9 @@ body {
 	background-color:  #00b991;
 	color:white;
 }
+.nav-margin {
+	margin-bottom: 120px;
+}
 .firstContent {
 	margin-top: 110px;
 }
@@ -542,3 +545,35 @@ body {
 	background-color: rgba(13,114,31,0.50);
 	display: none;
 }
+/* manuscript */
+.manuscriptDiv {
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	text-align: justify;
+	font-size: 16px;
+	color: black;
+} 
+.manuscriptDetails {
+	background-color: white;
+	border:thin solid gray;
+}
+.manuscriptDetails .row {
+	margin: 0px 10px 0px 10px;
+}
+.manuscriptDetails .mancover {
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+.manuscriptDetails .row block .coverurl, .manuscriptDetails .row block .manurl , .manuscriptDetails .row block .editUrl{
+	color: black;
+	margin-top: 30px;
+	font-size: 18px;
+	padding-right: 40px;
+}
+.manuscriptDetails .row block .manurl  {
+	color:green;
+}
+.manuscriptDetails .row block .editUrl {
+	color:#1D38B4;
+	padding-left: 40px;
+}
+

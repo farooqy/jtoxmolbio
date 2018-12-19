@@ -2,6 +2,7 @@
 var baserUrl = "http://jtoxmolbio/";
 
 $(document).ready(function(){
+	console.log($('body').innerHeight());
 	$('.toggleAuthorBox').click(function(){
 		$('.authorInfoBoxDiv').toggle();
 	});

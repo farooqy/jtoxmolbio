@@ -233,6 +233,8 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["ManInfo"]))
 		{
 			$isSuccess = true;
 			$successMessage = "success";
+			$_SESSION["ManInfo"] = null;
+			unset($_SESSION["ManInfo"]);
 		}
 	}
 	else
