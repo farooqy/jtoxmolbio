@@ -576,4 +576,28 @@ body {
 	color:#1D38B4;
 	padding-left: 40px;
 }
-
+.manuscriptDetails .manList {
+	border-radius: 5px;
+	margin-top: 10px;
+}
+.manListDiv {
+	display: inline-block;
+	width: 225px;
+	margin-right: 12px;
+	border: thin solid gray;
+	border-radius: 8px;
+	padding-right: 5px;
+	height: 260px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+.manListDiv img {
+	border:none;
+}
+.manListDiv a{
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	color: black;
+}
+.manuscriptDetails .row .thumbnail {
+	display: inline-block;
+}

@@ -7,18 +7,19 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["email"]) && isset($_SESSIO
 	$userToken = $_SESSION["veriftoken"];
 	if(empty($userEmail) || empty($userToken))
 	{
-		header("Location: $url.'login?redirect=tracks&extra=biased'");
+		header("Location: $url"."login?redirect=tracks&extra=biased");
 		exit(0);
 	}
 	else if(isset($_GET["sb"]) && isset($_GET["token"]))
 	{
 		$sb = $_GET["sb"];
 		$token = $_GET["token"];
+		$actions = array("success", "view");
 		if(empty($sb) || empty($token))
 		{
 			$errorTrigger = "empty parameters. cannot verify anything";
 		}
-		else if($sb !== "success")
+		else if(in_array($sb, $actions) === false)
 		{
 			$errorTrigger = "The submition is not valid. Please contact admin if error persist";
 		}
@@ -54,7 +55,7 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["email"]) && isset($_SESSIO
 				$Manuscript = null;
 				unset($Manuscript);
 			}
-			else
+			else if($Manuscript[0]["status"] === "published")
 			{
 				$manNum = $Manuscript[0]["man_num"];
 				$manid = $Manuscript[0]["id"];
@@ -85,18 +86,62 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["email"]) && isset($_SESSIO
 					$Manuscript[0]["manuscript_url"] = $publishData[0]["j_url"];
 					$Manuscript[0]["time"] = $publishData[0]["j_time"];
 				}
-				
+			}
+			if(isset($errorTrigger) === false) 
+			{
+				$table = "journal_figures";
+				$manid = $Manuscript[0]["id"];
+				$fields = "id, figure_url";
+				$condition = "journal_id = $manid AND type ='figure' ";
+				$jFigures = $Super_Class->Super_Get($fields, $table, $condition, "id");
+				if($jFigures === false)
+				{
+					$errorTrigger = "Failed to get the figures of the manuscript. Please contact support";
+					$Manuscript =null;
+					unset($Manuscript);
+				}
+				else if(is_array($jFigures) === false)
+				{
+					$errorTrigger = "The manuscript figures retrieved are of valid type. Please contact support";
+					$Manuscript =null;
+					unset($Manuscript);
+				}
+				else
+					$Manuscript[0]["Figures"] = $jFigures;
 			}
 		}
 	}
 	else
 	{
-		echo "Someting else";
+		require_once($root."classes/SuperClass.php");
+		$Super_Class = new Super_Class();
+		$table = "journal_main";
+		$fields = "*";
+		$condition = "submitter = 'debanjanimagine@outlook.com'";
+		$Manuscript = $Super_Class->Super_Get($fields, $table, $condition, "id DESC");
+		if($Manuscript === false)
+		{
+			$errorTrigger = "Failed to retrieve the list of manuscript you have submitted. Please contact support for assistance";
+			$Manuscript = null;
+			unset($Manuscript);
+		}
+		else if(is_array($Manuscript) === false)
+		{
+			$errorTrigger = "The manuscript list retrieved is not recognized type. Please contact support for assistance";
+			$Manuscript = null;
+			unset($Manuscript);
+		}
+		else
+		{
+			$displayListManuscript = true;
+//			echo count($Manuscript);
+		}
+			
 	}
 }
 else
 {
-	header("Location: $url.'login?redirect=tracks'");
+	header("Location: $url"."login?redirect=tracks");
 	exit(0);
 }
 $trackPage = true;
@@ -143,6 +188,88 @@ $trackPage = true;
 	</div>
 	<?php
 	}
+	else if(isset($Manuscript) && isset($displayListManuscript) && $displayListManuscript === true)
+	{
+		?>
+	
+	<div class="row">
+		<div class="col-md-2 col-lg-2 col-sm-0 col-xs-0">
+		</div>
+		<div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 manuscriptDetails">
+			<div class="row manList">
+		<?php
+		foreach($Manuscript as $manKey => $manData)
+		{
+			$table = "journal_figures";
+			$fields = "id, figure_url";
+			$manid = $manData["id"];
+			$condition = "type = 'figure' AND journal_id = $manid";
+			$jFigures = $Super_Class->Super_Get($fields, $table, $condition, "id LIMIT 1");
+			$figureUrl = $url."uploads/sitefiles/logos/jtoxLogoMain.png";
+			if($jFigures !== false && count($jFigures) > 0 && is_array($jFigures) )
+				$figureUrl = $jFigures[0]["figure_url"];
+			$manTitle = $manData["title"];
+			if(strlen($manTitle) > 30)
+				$manTitle = substr($manTitle, 0, 40)."...";
+			$token = $manData["manToken"];
+			$link = $url."tracks?sb=view&token=$token&target=$manid";
+			?>
+			<div class="manListDiv ">
+				<div  class="">
+					<a href="<?php echo $link ?>" class="row">
+						<img src="<?php echo $figureUrl ?>" height="130px" class="">
+					</a>
+				</div>
+					
+				<div  class="">
+					<?php
+					if($manData["status"] === "deleted")
+					{
+						?>
+						<span class="glyphicon glyphicon-remove-circle" style="color: red"></span>
+						<?php echo $manData["status"] ;
+					}
+					else if($manData["status"] === "published")
+					{
+						?>
+						<span class="glyphicon glyphicon-ok-circle" style="color: green"></span>
+						<?php echo $manData["status"] ;
+					}
+					else if($manData["status"] === "resent")
+					{
+						?>
+						<span class="glyphicon glyphicon-repeat" style="color: orangered"></span>
+						<?php echo $manData["status"] ;
+					}
+					else
+					{
+						?>
+						<span class="glyphicon glyphicon-certificate"></span>
+						<?php echo $manData["status"] ;
+					}
+					?>
+					
+				</div>
+				<div  class="">
+					<a href="<?php echo $link ?>">
+						<h4><b><?php echo $manTitle ?></b></h4>
+					</a>
+				</div>
+				<div class="">
+					
+				</div>
+			</div>
+		
+			<?php
+		}
+		?>
+			</div>
+		</div>
+		<div class="col-md-2 col-lg-2 col-sm-0 col-xs-0">
+		</div>
+	</div>
+		<?php
+	}
 	else if(isset($Manuscript))
 	{
 //		print_r($Manuscript);
@@ -166,6 +293,19 @@ $trackPage = true;
 			<div class="row">
 				<?php echo $Manuscript[0]["abstract"] ?>
 			</div>
+			<div class="row">
+					<?php
+			$figures = $Manuscript[0]["Figures"];
+			foreach($figures as $fkey => $fData)
+			{
+				$furl = $fData["figure_url"];
+				?>
+				<img src="<?php echo $furl ?>" height="120px" class="thumbnail">
+				<?php
+			}
+					?>
+			</div>
+			
 			<div class="row mancover">
 				<block>
 					
@@ -208,9 +348,6 @@ $trackPage = true;
 				?>
 				
 					
-			</div>
-			<div class="row">
-				
 			</div>
 		</div>
 		<div class="col-md-2 col-lg-2 col-sm-0 col-xs-0">
