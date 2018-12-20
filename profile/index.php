@@ -5,10 +5,154 @@ $url = "http://jtoxmolbio/";
 //	header( "Location: $url" . "maintenance" );
 //	exit( 0 );
 //}
-if(isset($_SESSION["isLoggedIn"]) === false)
+ini_set("SMTP","ssl://smtp.gmail.com");
+	  ini_set("smtp_port","465");
+require_once($root."classes/functions.php");
+if(isset($_SESSION["isLoggedIn"]) === false && isset($_SESSION["verifStatus"]))
 {
 	header("Location: $url".'login?redirect=profile');
 	exit(0);
+}
+else if(isset($_GET["requestType"]) && isset($_GET["token"]))
+{
+	$reqType = Sanitize_String($_GET["requestType"]);
+	$userToken = Sanitize_String($_GET["token"]);
+	if($userToken !== $_SESSION["veriftoken"] && $reqType === "verification")
+	{
+		$errorMessage = "Invalid data has been submitted. Cannot do verification. Please contact admin if error persist";
+	} 
+	else if($reqType === "verification")
+	{
+		require_once($root."classes/SuperClass.php");
+		$Super_Class = new Super_Class();
+		$table = "user_verification";
+		$fields = "verif_status = 'expired'";
+		$condition = "verif_target = '$userToken'";
+		$isUpdated = $Super_Class->Super_Update($table, $fields, $condition);
+		if($isUpdated === false)
+		{
+			$errorMessage = "Failed to update verification details. Please contact support";
+		}
+		else 
+		{
+			$time = time();
+			$verifToken = Get_Hash($time);
+			$verifStatus = 'active';
+
+			$fields = "verif_token,verif_target, verif_time, verif_status";
+			$values = "'$verifToken', '$userToken', $time, '$verifStatus'";
+			$gotToken = $Super_Class->Super_Insert($table, $fields, $values);
+			if($gotToken === false)
+				$errorMessage = "Failed to generate token for your verification. Please contact support";
+			else
+			{
+				$userName = $_SESSION["fullname"];
+				$from = "no-reply@jtoxmolbio.com";
+				$to = $_SESSION["email"];
+				$subject = 'JToxMolBio | Verify your email';
+				$message = "Hello $userName <br>";
+				$replyto = "support@jtoxmolbio.com";
+				$link = $url."profile.php?requestType=vuwhut&token=$verifToken";
+				$message = $message."To verify your email address, 
+				please <a href=\"".$link."\"> click here. </a><br>";
+				$message = $message."If the link is not clickable, 
+				please copy the url below and paste it 
+				to your browser.<br><br> ";
+				$message = $message." $link <br><br><br>";
+				$message = $message."Regards,<br>Jtox Team.";
+				$headers  = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				// Create email headers
+				$headers .= 'From: '.$from."\r\n".
+				  'Reply-To: '.$replyto."\r\n" .
+				  'X-Mailer: PHP/' . phpversion();
+				require_once($root."classes/mail.php");
+				$Mailer = new Mail();
+				$Mailer->set_mail_data($to, $subject, $message, $headers);
+				$mail_status = $Mailer->send_mail();
+				if($mail_status === true)
+				{
+					$success = "sent the verification email. Pleae check you mailbox and click on the verification link to verify your account";
+					if($Mailer->log_email())
+					{
+						$success = "successfully ".$success;
+					}
+				}
+				else
+					$errorMessage = "The verification has failed. Please contact admin for support";
+			}
+			
+		}
+		
+	}
+	else if($reqType === "vuwhut")
+	{
+		require_once($root."classes/SuperClass.php");
+		$Super_Class = new Super_Class();
+		$verifToken = $userToken;
+		$userEmail = $_SESSION["email"];
+		$userToken = $_SESSION["veriftoken"];
+		$verifStatus = 'verified';
+		$table = "user_verification";
+		$fields = "*";
+		$condition = "verif_token ='$verifToken' AND verif_target = '$userToken' AND verif_status = 'active' ";
+		$gotToken = $Super_Class->Super_Get($fields, $table, $condition, "verif_id");
+		if($gotToken === false)
+			$errorMessage = "Failed to get token for your verification. Please contact support";
+		else if($gotToken[0]["verif_time"] < (time() - (24*60*60)))
+		{
+			//verification time must not be 24 hrs more than the time requested
+			$errorMessage = "Your verification link has expired. Please request a new verification link";
+		}
+		else
+		{
+			$table = "users";
+			$fields = "status = 'active'";
+			$condition= "veriftoken ='$userToken' AND email ='$userEmail'  ";
+			$isUpdated = $Super_Class->Super_Update($table, $fields, $condition);
+			if($isUpdated === true)
+			{
+				$userName = $_SESSION["fullname"];
+				$from = "no-reply@jtoxmolbio.com";
+				$to = $_SESSION["email"];
+				$subject = 'JToxMolBio | Verify your email';
+				$message = "Hello $userName <br>";
+				$replyto = "support@jtoxmolbio.com";
+				$link = $url."profile.php?requestType=vuwhut&token=$verifToken";
+				$message = $message."To verify your email address, 
+				please <a href=\"".$link."\"> click here. </a><br>";
+				$message = $message."If the link is not clickable, 
+				please copy the url below and paste it 
+				to your browser.<br><br> ";
+				$message = $message." $link <br><br><br>";
+				$message = $message."Regards,<br>Jtox Team.";
+				$headers  = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				// Create email headers
+				$headers .= 'From: '.$from."\r\n".
+				  'Reply-To: '.$replyto."\r\n" .
+				  'X-Mailer: PHP/' . phpversion();
+				require_once($root."classes/mail.php");
+				$Mailer = new Mail();
+				$Mailer->set_mail_data($to, $subject, $message, $headers);
+				$mail_status = $Mailer->send_mail();
+				if($mail_status === true)
+				{
+					$success = "Verified your account. Thank you.";
+					$_SESSION["verifStatus"] = "active";
+					if($Mailer->log_email())
+					{
+						$success = "successfully ".$success;
+					}
+				}
+				else
+					$errorMessage = "The verification has failed. Please contact admin for support";
+			}
+			else
+				$errorMessage = "failed to verify your account. Please contact support";
+				
+		}
+	}
 }
 $profilePage = true;
 ?>
@@ -40,6 +184,43 @@ $profilePage = true;
   <div class="row errorDiv mar-top-90">
   	
   </div>
+  <?php
+	if(isset($errorMessage))
+	{
+		$usertoken = $_SESSION["veriftoken"];
+		$veriflink = $url.'profile?requestType=verification&token='.$usertoken;
+		?>
+  <div class="row  mar-top-90 displayError" style="display: block">
+  	<?php echo $errorMessage ?>
+  </div>
+  <div class="row verifDiv">
+  	You have not verified your account. Some of the functionalities are disabled until your verify your account. Please
+	<a href="<?php echo $veriflink ?>"> Click here </a> 
+	to verify your account
+  </div>
+		<?php
+	}
+	else if(isset($success))
+	{
+		?>
+  <div class="row successDiv mar-top-90" style="display: block">
+  	<?php echo $success ?>
+  </div>
+		<?php
+	}
+	else  if($_SESSION["verifStatus"] === "unverified")
+	{
+		$usertoken = $_SESSION["veriftoken"];
+		$veriflink = $url.'profile?requestType=verification&token='.$usertoken;
+		?>
+  <div class="row verifDiv mar-top-90">
+  	You have not verified your account. Some of the functionalities are disabled until your verify your account. Please
+	<a href="<?php echo $veriflink ?>"> Click here </a> 
+	to verify your account
+  </div>
+		<?php 
+	}
+	?>
   <div class="row profilePage">
   <div class="col-xs-0 col-sm-0 col-md-3 col-lg-3">
   	
