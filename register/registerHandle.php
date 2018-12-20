@@ -109,6 +109,7 @@ if(isset($_POST["registerUser"]))
 				$_SESSION["country"] = $userData[8];
 				$_SESSION["institute"] = $userData[6];
 				$_SESSION["department"] = $userData[7];
+				$_SESSION["verifStatus"] = "unverified";
 			}
 			else
 				$errorMessage = $Super_Class->Get_Message();
