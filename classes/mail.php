@@ -1,5 +1,5 @@
 <?php
-require_once("database.php");
+require_once("SuperClass.php");
 class Mail {
   
   protected $to =null;
@@ -17,62 +17,49 @@ class Mail {
   protected $conn = ""; //hold the db query arrow 
   protected $db = "";//holds the database object
   protected $db_status = false; //not conencted initially
-  
+  protected $Super_Class = null;
   
   public function __construct()
   {
-    $this->db = new connection();
-    $status = $this->db->connection_status();
-    if($status)
-    {
-      $this->conn = $this->db->connection();
-      $this->db_status = true; //db connection success
-    }
-    else
-    {
-      $this->error_status = true;
-      $this->error_message = "Connection failed 
-      ".$this->db->get_error();
-      echo $this->error_message;
-      exit(0);
-    }
+	  $this->Super_Class = new Super_Class();
+	  
   }
-  public function db_status()
-  {
-    return $this->db_status;
-  }
+//  public function db_status()
+//  {
+//    return $this->db_status;
+//  }
   public function get_message()
   {
     return $this->error_message;
   }
   //main function that interacts with the database
-  private function make_query($query, $type="insert")
-  {
-    try
-    {
-      $q = $this->conn->query($query);
-    }
-    catch(PDOException $e)
-    {
-      $this->error_status = true;
-      $this->error_message = "Failed to insert new
-      sheekh: ".$e->getMessage();
-      return false;
-    }
-    if($type === "insert")
-      return true;
-    else if($type === "fetch")
-    {
-      $return_data = $q->fetchAll(PDO::FETCH_ASSOC);
-      return $return_data;
-    }
-    else
-    {
-      $this->error_message = "Unknown query type";
-      return false;
-    }
-    
-  }
+//  private function make_query($query, $type="insert")
+//  {
+//    try
+//    {
+//      $q = $this->conn->query($query);
+//    }
+//    catch(PDOException $e)
+//    {
+//      $this->error_status = true;
+//      $this->error_message = "Failed to insert new
+//      sheekh: ".$e->getMessage();
+//      return false;
+//    }
+//    if($type === "insert")
+//      return true;
+//    else if($type === "fetch")
+//    {
+//      $return_data = $q->fetchAll(PDO::FETCH_ASSOC);
+//      return $return_data;
+//    }
+//    else
+//    {
+//      $this->error_message = "Unknown query type";
+//      return false;
+//    }
+//    
+//  }
   //mail sender
   public function send_mail()
   {
@@ -116,15 +103,17 @@ class Mail {
   //database log
   public function log_email()
   {
-    $sql = "INSERT INTO `mails` 
-    (m_to, m_subject, m_message, 
-    m_headers, m_params, m_status, m_date) 
-    VALUES('$this->to', '$this->subject', '$this->message',
+	$table = "mails";
+	$fields = "m_to, m_subject, m_message, 
+    m_headers, m_params, m_status, m_date";
+	$values = "'$this->to', '$this->subject', '$this->message',
     '$this->headers', '$this->params',
-    '$this->is_sent', $this->m_date)";
+    '$this->is_sent', $this->m_date";
+	 
+    $isLoged = $this->Super_Class->Super_Insert($table, $fields, $values);
     
-    $query = $this->make_query($sql);
-    return $query;
+//    $query = $this->make_query($sql);
+    return $isLoged;
   }
   
 }
