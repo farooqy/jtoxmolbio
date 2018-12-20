@@ -5,7 +5,7 @@ $url = "http://jtoxmolbio/";
 //	header( "Location: $url" . "maintenance" );
 //	exit( 0 );
 //}
-if(isset($_SESSION["isLoggedIn"]) === false)
+if(isset($_SESSION["isLoggedIn"]) === false || isset($_SESSION["verifStatus"]) === false)
 {
 	header("Location: $url"."login?redirect=submit");
 	exit(0);
@@ -49,7 +49,23 @@ $submitPage = true;
   <div class="row" id="header">
   	<?php require($root."includes/nav.php"); ?>
   </div>
-  <?php if(isset($_ManStage)) var_dump($_ManStage);?>
+  <?php if(isset($_ManStage)) var_dump($_ManStage);
+	if($_SESSION["verifStatus"] === "unverified")
+	{
+		$usertoken = $_SESSION["veriftoken"];
+		$veriflink = $url.'profile?requestType=verification&token='.$usertoken;
+		?>
+		<div class="row verifDiv mar-top-90">
+			In order to start submitting manuscripts, Please verify your account first. 
+			<a href="<?php echo $veriflink ?>">Click</a> 
+			here to verify your account
+		</div>
+		<?php
+	}
+	else
+	{
+		?>
+	
   <div class="row submitPageBox" id="content">
 	<div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 submitRightBarDiv">
 		<div class="row active formTrigger currentTrigger triggerForm1" target="paperForm1" >
@@ -557,7 +573,10 @@ $submitPage = true;
 		   
 	</div>
 	<div class="col-md-2 col-lg-2"></div>
-  </div>
+  </div>	
+		<?php
+	}
+	?>
 </div>
 <div class="container">
 	<?php require_once($root."includes/footer.html") ?>
