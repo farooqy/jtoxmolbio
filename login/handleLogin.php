@@ -60,6 +60,7 @@ else if(isset($_POST["loginUser"]))
 			$_SESSION["country"] = $user[0]["country"];
 			$_SESSION["institute"] = $user[0]["Institution"];
 			$_SESSION["department"] = $user[0]["Department"];
+			$_SESSION["verifStatus"] = $user[0]["status"];
 		}
 	}
 	
