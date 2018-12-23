@@ -619,3 +619,116 @@ body {
 .manuscriptDetails .row .thumbnail {
 	display: inline-block;
 }
+.editorBox {
+	margin-top: 110px;
+	background-color: white;
+	border:thin solid gray;
+	border-radius: 5px;
+}
+.editorBox .roleTitle {
+	color: white;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	font-size: 20px;
+	background-color: #00b991;
+	height: 40px;
+	border:thin solid gray;
+	line-height: 40px;
+	text-align: center;
+}
+.editorDetails {
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	font-size: 15px;
+}
+.editorDetails th {
+	text-align: center;
+	border-right: thin solid gray;
+}
+.editorDetails th:last-child{
+	border-right: none;
+}
+
+.editorDetails td {
+	border-right: thin solid gray;
+	border-bottom: thin solid gray;
+}
+.editorDetails tbody td:nth-child(1) {
+	width: 15%;
+}
+.editorDetails tbody td:nth-child(2) {
+	width: 20%;
+}
+.editorDetails tbody td:nth-child(3) {
+	width: 30%;
+}
+.editorDetails tbody td:nth-child(4) {
+	width: 25%;
+}
+
+.editorDetails tbody td:last-child {
+	border-right: none;
+	width: 10%;
+}
+/*archive*/
+.archiveDiv {
+	margin-top: 110px;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+}
+.archiveDiv ul {
+  list-style-type:none;
+	text-align: justify;
+	padding-right: 10px;
+}
+.volume {
+  border-right: thin solid gray;
+}
+.vname {
+  background-color: #00b991;
+  color:white;
+  padding-left:10px;
+  cursor:pointer;
+  margin-bottom:2px;
+  border-bottom:thin solid black;
+  font-size:large;
+}
+.issuename {
+  background-color: #75132d ;
+  color:white;
+  cursor:pointer;
+  margin-bottom:2px;
+  font-size:larger;
+}
+.paper_title:hover {
+	background-color:#00b991;
+	color: white;
+}
+.paper_title {
+  cursor:pointer;
+	border-bottom: thin solid gray;
+}
+.paperLoader, .paperDiv .openViews {
+    display:none;
+}
+.archiveBox {
+	background-color: white;
+	margin-left: 5px;
+	border: thin solid gray;
+	border-radius: 5px;
+	padding-bottom: 10px;
+	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+	font-size: 18px;
+	text-align: justify;
+}
+.archiveBox .paperDiv .submit_abstract {
+	padding-right: 15px;
+}
+.archiveBox .paperDiv .submit_title {
+	font-weight:bolder;
+	text-decoration: underline;
+	
+}
+.archiveBox .paperDiv .submit_date {
+	font-weight:bold;
+}
+.archiveBox .openViews {
+	margin-top: 20px;
+}
