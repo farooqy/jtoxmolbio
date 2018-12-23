@@ -71,7 +71,7 @@ $ccLincese = $url."uploads/sitefiles/icons/cclicense.png";
 					?>
 					
 		        <li class="<?php if(isset($logoutPage)) echo 'active' ?>"><a href="<?php echo $logout ?>">logout</a></li>
-				<li class="<?php if(isset($boardPage)) echo 'active' ?>"><a href="<?php echo $board ?>">Board</a></li>
+ 		        <li class="<?php if(isset($contactPage)) echo 'active' ?>"><a href="<?php echo $contactus  ?>">Contact</a></li>
 					<?php
 				}
 				else

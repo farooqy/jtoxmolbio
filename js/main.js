@@ -30,6 +30,15 @@ $(document).ready(function(){
 		var url = baserUrl+'login/handleLogin.php';
 		ajax_request(formData, url, 'login');
 	});
+	//on contact
+	$('.formContactUs').submit(function(e){
+		e.preventDefault();
+		var formData = new FormData(this);
+		var url = baserUrl+"contactus/index.php?AJAX=1";
+		formData.append("requestType", "feedbackSubmit");formData.append('CaptchaInstanceId', BotDetect.getInstanceByStyleName("ContactCaptcha").captchaId);
+		ajax_request(formData, url, "feedback", $(this));
+		
+	});
 	
 	//profile page
 	if($('div').hasClass('profilePage'))
@@ -144,8 +153,48 @@ $(document).ready(function(){
 		var url = baserUrl+"submit/finalSubmition.php";
 		ajax_request(formData, url, "finalSubmition");
 	});
+	//archive
+	$('.vname').click(function(){
+		var target = $(this).attr('target');
+// 		$('.'+target).toggle();
+		if($('.'+target).hasClass('hide'))
+			$('.'+target).removeClass('hide');
+		else
+			$('.'+target).toggle();
+	});
+		$('.issuename').click(function(){
+		var target = $(this).attr('target');
+		if($('.'+target).hasClass('hide'))
+			$('.'+target).removeClass('hide');
+		else
+			$('.'+target).toggle();
+	});
+	$('.paper_title').click(function(){
+	    $('paperDivError').css('display','none');
+	    $('paperDiv').css('display','none');
+	    $('.paperLoader').css('display','block');
+		var target = $(this).attr('target');
+		var formData = new FormData();
+		formData.append('key', 'retreive');
+		formData.append('value', target);
+		ajax_request(formData, baserUrl+'archive/getPaper.php', 'paper');
+		
+// 		var current_paper = $('.current_paper');
+// 		//alert('target'+target);
+// 		$(current_paper).removeClass('current_paper');
+// 		$(current_paper).addClass('hide');
+// 		$('.'+target).removeClass('hide');
+// 		$('.'+target).addClass('current_paper');
+		
+//		var ajax_url = baserUrl+'archive/sweiv.php';
+//		var form_data = new FormData();
+//		var paper = $(this).attr('data');
+//		form_data.append('paper',paper);
+//		form_data.append('type', 'sweiv');
+//		ajax_request(form_data, ajax_url, "sweiv");
 	
 	//remove author
+	});
 	$('.removeAuthor').click(function(){
 		removeAuthor($(this));
 	});
@@ -185,6 +234,10 @@ function successHandle(data,regType, base='')
 	{
 		alert(data.errorMessage);
 		processError(data.errorMessage);
+		if(regType === "feedback")
+		{
+			$(".BDC_ReloadIcon").click();
+		}
 	}
 	else if(data.isSuccess === true)
 	{
@@ -309,6 +362,26 @@ function successHandle(data,regType, base='')
 			window.location.href=baserUrl+"tracks?sb=success&token="+data.mantoken;
 //			alert("Submition success ");
 		}
+		else if(regType === "feedback")
+		{
+			alert("Your feedback was successfully sent. We will reply to you as soon as possible");
+			$(".BDC_ReloadIcon").click();
+			document.getElementsByClassName('formContactUs')[0].reset();
+		}
+		else if(regType === "paper")
+		{
+			$('.submit_title').text(data.data.man_title);
+			$('.submit_date').text(data.data.man_time);
+			$('.submit_authors').text(data.data.man_authors);
+			$('.submit_abstract').text(data.data.man_abstract);
+			$('.submit_images').html(data.data.man_figures);
+			$('.submit_pdfLink').attr("href",data.data.man_jurl);
+			$('.paperLoader').css('display','none');
+			$('.paperDiv').css('display','block');
+			$('.openViews').css('display','block');
+			$('.submit_views').text(data.data.man_views);
+			    
+		}
 		else
 		{
 			alert("success done");
@@ -317,7 +390,8 @@ function successHandle(data,regType, base='')
 	}
 	else
 	{
-		alert("error processing the request, please contact admin "+data.isSuccess);
+		alert("error processing the request, please contact admin "+data.successMessage);
+		
 	}
 }
 function errorHandle(error)
