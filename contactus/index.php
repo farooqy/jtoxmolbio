@@ -3,6 +3,10 @@ $root = $_SERVER["DOCUMENT_ROOT"]."/";
 $url = "http://jtoxmolbio/";
 
 $contactPage = true;
+require_once($root."includes/lib/simple-botdetect.php");
+// create & configure the Captcha object
+$ContactCaptcha = new SimpleCaptcha("ContactCaptcha");
+require_once("feedback.php");
 ?>
 <!doctype html>
 <html>
@@ -14,7 +18,7 @@ $contactPage = true;
 <link href="../jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
 <link href="../jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
 <link href="../jQueryAssets/jquery.ui.progressbar.min.css" rel="stylesheet" type="text/css">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Journal Of Toxicology and Molecular Biology</title>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -33,13 +37,19 @@ $contactPage = true;
 	<div class="row contactusPageBox " id="">
 		<div class="col-md-3 col-lg-3 col-sm-0 col-xs-0"></div>
 		<div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+			<div class="row errorDiv">
+			</div>
 			<form class="formContactUs row " name="form" method="post" action="" id="">
+				<label for="senderName" class="textLabel">Your name</label>
+				<input type="text" name="senderName" class=" " placeholder="Enter your name" <?php if(isset($_SESSION["fullname"])) echo "value=\"".$_SESSION["fullname"]."\" " ?> required/>
 				<label for="emailAddress" class="textLabel">Email Address</label>
-				<input type="text" name="emailAddress" class=" " placeholder="Enter your email address"/>
-				<label for="feedBackTitle" class="textLabel">Message title</label>
-				<input type="text" name="feedBackTitle" class=" " placeholder="Enter title for the message"/>
-				<label for="emailAddress" class="textLabel">Your message</label>
-				<textarea name="emailAddress" class=" " placeholder="Enter message or feedback " ></textarea>
+				<input type="email" name="emailAddress" class=" " placeholder="Enter your email address" <?php if(isset($_SESSION["email"])) echo "value=\"".$_SESSION["email"]."\" " ?> required/>
+				<label for="feedbackTitle" class="textLabel">Message title</label>
+				<input type="text" name="feedbackTitle" class=" " placeholder="Enter message title" required/>
+				<label for="feedbackContent" class="textLabel">Your message</label>
+				<textarea name="feedbackContent" class=" " placeholder="Enter message or feedback " required></textarea>
+				<?php echo $ContactCaptcha->Html(); ?>
+				<input type="text" name="CaptchaCode" id="CaptchaCode" class="textbox" required/>
 				<input type="submit" name="submitFeedBack" value="Send" class="btn btn-feedBack">
 
 			 </form>
