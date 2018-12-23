@@ -2,7 +2,26 @@
 $root = $_SERVER["DOCUMENT_ROOT"]."/";
 $url = "http://jtoxmolbio/";
 
-$morePage = true;
+require_once($root."classes/SuperClass.php");
+$Super_Class = new Super_Class();
+$table = array("editors", "roles");
+$fields = "`editors`.*, `roles`.role_name";
+$condtion = "`editors`.`role_id` = `roles`.`role_id` AND `roles`.role_status = 'active' AND `editors`.`ed_status` = 'active'";
+$sortby = "`editors`.role_id, `editors`.`role_index`";
+$editorsList = $Super_Class->Super_Get($fields, $table, $condtion, $sortby);
+
+if($editorsList === false)
+{
+	$errorMessage = "Failed to get the list of editors. Please contact support";
+	$editorsList = null;
+	unset($editorsList);
+}
+else if(is_array($editorsList) === false)
+{
+	$errorMessage = "The list of editors returned is not of valid type";
+	$editorsList = null;
+	unset($editorsList);
+}
 $editorialPage = true;
 ?>
 <!doctype html>
@@ -28,10 +47,86 @@ $editorialPage = true;
  	<div class="row">
    	<?php require_once($root."includes/nav.php"); ?>
     </div>
+	<div class="row editorDiv">
+		<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 editorBox">
+			<div class="row">
+				
+				<?php
+	if(isset($errorMessage))
+	{
+		?>
+				<div class="row  mar-top-90 displayError" style="display: block">
+					<?php echo $errorMessage ?>
+				</div>
+	
+	<?php
+	}
+	else if(isset($editorsList) && is_array($editorsList))
+	{
+		
+		$passedRoles = array();
+		foreach($editorsList as $edKey => $editor)
+		{
+			$roleId = $editor["role_id"];
+			$edRole = $editor["role_name"];
+			if(in_array($roleId, $passedRoles) === false)
+			{
+				if($edKey > 0)
+				{
+					$openTable = false;
+					?>
+				</body>
+			</table>
+				<?php
+				}
+				?>
+				<div class=" roleTitle">
+					<?php echo $edRole ; $openTable = true;?>
+				</div>
+				<table class="table editorDetails">
+					<thead>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Institute</th>
+						<th>Department</th>
+						<th>Location</th>
+					</thead>
+					<tbody>
+	<?php
+					array_push($passedRoles, $roleId);
+			}
+			$edName = $editor["ed_title"]." ".$editor["ed_name"];
+			$edEmail = $editor["ed_email"];
+			$edLocation = $editor["ed_location"];
+			$edInstitute = $editor["ed_institute"];
+			$edDepartment = $editor["ed_department"];
+				?>
+					<tr>
+						<td><?php echo $edName  ?></td>
+						<td><?php echo $edEmail  ?></td>
+						<td><?php echo $edInstitute ?></td>
+						<td><?php echo $edDepartment ?></td>
+						<td><?php echo $edLocation ?></td>
+					</tr>
+	<?php
+		}
+		if(isset($openTable) && $openTable === true)
+		{
+			?>
+					</tbody>
+		</table>
+						<?php
+		}
+		?>
+	<?php
+	}
+	?>
+				
+			</div>
+		</div>
+	</div>
     
-	<div class="row">
-   		
-    </div>
+	
     <?php require_once($root."includes/footer.html"); ?>
 </div>
 <script src="../js/jquery-1.11.3.min.js"></script>
