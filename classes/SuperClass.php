@@ -14,10 +14,10 @@ class Super_Class
 	private $SQL_ERROR = "The query to process your request contains an 
 	error, please contact administrator";
 
-	public function __construct()
+	public function __construct($fullpath='../')
   	{
-  		$this->error_file = "superClass.error";
-  		$this->Logger = new Logger($this->error_file);
+  		$this->error_file = "superClass.txt";
+  		$this->Logger = new Logger($this->error_file, $fullpath);
     	$this->db = new connection();
 	    $status = $this->db->connection_status();
 	    if($status)

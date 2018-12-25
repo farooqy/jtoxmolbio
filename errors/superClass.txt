@@ -1,0 +1,8 @@
+error
+Failed to fetch : SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' status = 'published' 
+			ORDER BY id LIMIT 5' at line 1
+Failed to fetch : SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' status = 'published' 
+			ORDER BY id LIMIT 5' at line 1Failed to fetch : SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' status = 'published' 
+			ORDER BY views LIMIT 5' at line 1Failed to fetch : SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' status = 'published' 
+			ORDER BY views LIMIT 5' at line 1Failed to fetch : SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'id' in field list is ambiguous
+Failed to fetch : SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'id' in field list is ambiguousFailed to fetch : SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'id' in field list is ambiguousFailed to fetch : SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'id' in field list is ambiguous

@@ -14,9 +14,10 @@ class Logger {
 	protected $fp_is_open = false;
 	protected $initial_error = false;
 
-	public function __construct($log_file ="registerError.log")
+	public function __construct($log_file ="registerError.log", $fullapth)
 	{
 		//create the file if it doesnt exist
+		$this->full_path = $fullapth;
 		$this->log_file = $this->full_path.$log_file;
 		if(file_exists($this->log_file) === false)
 		{	
@@ -59,6 +60,7 @@ class Logger {
 		}
 		else
 		{
+//			echo "writing file ".$this->log_file;
 			if(!fwrite($this->fp, $error))
 			{
 				$error = " Failed to write to the file, check 

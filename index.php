@@ -2,6 +2,74 @@
 $root = $_SERVER["DOCUMENT_ROOT"]."/";
 $url = "http://jtoxmolbio/";
 
+require_once($root."classes/SuperClass.php");
+$Super_Class = new Super_Class($root."errors/");
+$table = array("journal_main","published_journals");
+$fields = "`journal_main`.id, manToken, title, j_type, views, `published_journals`.j_url, `published_journals`.j_time";
+$condition = "`published_journals`.j_id = `journal_main`.id AND status = 'published'";
+$Manuscripts = $Super_Class->Super_Get($fields, $table, $condition, "`journal_main`.id LIMIT 5");
+
+$popularManuscripts = $Super_Class->Super_Get($fields, $table, $condition, "views LIMIT 5");
+if($Manuscripts === false)
+{
+	$errorMessage = "Failed to get the publsihed manuscript. Please contact support ".$Super_Class->Get_Message();
+	$Manuscripts = null;
+	unset($Manuscripts);
+}
+else if(is_array($Manuscripts) === false)
+{
+	$errorMessage = "The retrieved publishes are not of recognized types. Please contact support for assistance";
+	$Manuscripts = null;
+	unset($Manuscripts);
+}
+else
+{
+	foreach($Manuscripts as $manKey => $manData)
+	{
+		$manID = $manData["id"];
+		$manToken = $manData["manToken"];
+		$table = "journal_authors";
+		$fields = "id, a_title, a_secondName";
+		$condition = "journal_id = $manID";
+		$Authors = $Super_Class->Super_Get($fields, $table, $condition, "id");
+
+		if($Authors === false)
+		{
+			$Manuscripts[$manKey]["authors"] = "Failed to get authors";
+		}
+		else if(is_array($Authors) === false)
+		{
+			$Manuscripts[$manKey]["authors"] = "unrecognized author type";
+		}
+		else
+		{
+			foreach($Authors as $akey => $adata)
+			{
+				if(isset($Manuscripts[$manKey]["authors"]))
+				{
+					$Manuscripts[$manKey]["authors"] = $Manuscripts[$manKey]["authors"]." | ".$adata["a_title"]." ".$adata["a_secondName"];
+				}
+				else
+				{
+					$Manuscripts[$manKey]["authors"] = $adata["a_title"]." ".$adata["a_secondName"];
+				}
+			}
+		}
+		$table = "journal_figures";
+		$fields = "figure_url";
+		$condition = "journal_id = $manID";
+		$Figure = $Super_Class->Super_Get($fields, $table, $condition, $fields);
+		if($Figure === false || is_array($Figure) === false || count($Figure) <= 0)
+		{
+			$Manuscripts[$manKey]["figureurl"] = $url."uploads/sitefiles/icons/close_red.png";
+		}
+		else 
+			$Manuscripts[$manKey]["figureurl"] = $Figure[0]["figure_url"];
+		
+		
+	}
+}
+
 $homePage = true;
 ?>
 <!doctype html>
@@ -40,26 +108,34 @@ $homePage = true;
     			  <div class="carousel-inner" role="listbox">
     			    <div class="item active"><img src="uploads/sitefiles/slide/slider1.png" alt="First slide image" class="center-block">
     			      <div class="carousel-caption">
+<!--
     			        <h3>First slide Heading</h3>
     			        <p>First slide Caption</p>
+-->
   			        </div>
   			      </div>
     			  <div class="item"><img src="uploads/sitefiles/slide/slider2.png" alt="Second slide image" class="center-block">
     			      <div class="carousel-caption">
+<!--
     			        <h3>Second slide Heading</h3>
     			        <p>Second slide Caption</p>
+-->
   			        </div>
   			      </div>
 				  <div class="item"><img src="uploads/sitefiles/slide/slider3.png" alt="Third slide image" class="center-block">
 				   <div class="carousel-caption">
+<!--
 					<h3>Third slide Heading</h3>
 					<p>Third slide Caption</p>
+-->
 				  </div>
 			      </div>
 				  <div class="item"><img src="uploads/sitefiles/slide/slider4.png" alt="Fourth slide image" class="center-block">
 				   <div class="carousel-caption">
+<!--
 					<h3>Fourth slide Heading</h3>
 					<p>Fifth slide Caption</p>
+-->
 				  </div>
 			      </div>
 		        </div>
@@ -67,6 +143,59 @@ $homePage = true;
             </div>
             
           <div class="row latestArticleBar">Latest Article</div>
+          <?php
+		  if(isset($errorMessage))
+		  {
+			  ?>
+		<div class="row displayError">
+			<?php echo $errorMessage ?>
+		</div>
+			  <?php
+		  }
+		  else if(isset($Manuscripts) && is_array($Manuscripts))
+		  {
+			  foreach($Manuscripts as $manKey => $manData)
+			  {
+				  $manTitle = $manData["title"];
+				  $manFigure = $manData["figureurl"];
+				  $manAuthor = $manData["authors"];
+				  $manType = $manData["j_type"];
+				  $manUrl = $manData["j_url"];
+				  $manTime = $manData["time"];
+				  ?>
+		  
+          <div class="row">
+           	<div class="media-object-default">
+            	  <div class="media">
+            	    <div class="media-left"><a href="#"><img class="media-object" src="uploads/sitefiles/slide/slider2.png" alt="placeholder image" height="160px" width="210px;"></a></div>
+            	    <div class="media-body">
+            	      <h3 class="media-heading"><?php echo $manTitle ?></h3>
+            	       <div class="">
+            	       	<span class="glyphicon glyphicon-calendar" ></span>
+            	       	<?php echo $manTime ?>
+            	       	<span class="glyphicon glyphicon-tasks" ></span>
+            	       	<?php echo $manType ?>
+            	       </div>
+            	       <div class="paperAuthor">
+            	       	<span class="glyphicon glyphicon-pencil">
+            	       		<?php echo $manAuthor ?>
+            	       	</span>
+            	       	  
+            	       </div>
+            	       <div class="openArticle">
+            	       	<span class="glyphicon glyphicon-open-file"></span>
+            	       	<a href="<?php echo $manUrl ?>" class="">Read Article </a>
+            	       </div>
+						
+					  </div>
+          	    </div>
+       	    </div>
+          </div>
+				  <?php
+			  }
+		  }
+		  
+		  ?>
           <div class="row">
            	<div class="media-object-default">
             	  <div class="media">
