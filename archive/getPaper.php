@@ -113,6 +113,7 @@ if(isset($_POST["key"]) && isset($_POST["value"]))
                         "man_time" => format_time($man_time),
                         "man_views" => $man_views,
                         );
+					$_SESSION["viewID"] = $man_id;
                     $isSuccess = true;
                     $successMessage = "success";
                 }

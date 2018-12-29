@@ -117,7 +117,8 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_SESSION["email"]) && isset($_SESSIO
 		$Super_Class = new Super_Class();
 		$table = "journal_main";
 		$fields = "*";
-		$condition = "submitter = 'debanjanimagine@outlook.com'";
+		$condition = "submitter = '$userEmail'";
+		//		'debanjanimagine@outlook.com'";
 		$Manuscript = $Super_Class->Super_Get($fields, $table, $condition, "id DESC");
 		if($Manuscript === false)
 		{

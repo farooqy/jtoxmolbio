@@ -30,6 +30,14 @@ $(document).ready(function(){
 		var url = baserUrl+'login/handleLogin.php';
 		ajax_request(formData, url, 'login');
 	});
+	$('.formHomeLogin').submit(function(e){
+		e.preventDefault();
+		var formData = new FormData(this);
+		formData.append('loginUser', true);
+		var url = baserUrl+'login/handleLogin.php';
+		ajax_request(formData, url, 'login');
+	
+	});
 	//on contact
 	$('.formContactUs').submit(function(e){
 		e.preventDefault();
@@ -186,12 +194,12 @@ $(document).ready(function(){
 // 		$('.'+target).removeClass('hide');
 // 		$('.'+target).addClass('current_paper');
 		
-//		var ajax_url = baserUrl+'archive/sweiv.php';
-//		var form_data = new FormData();
-//		var paper = $(this).attr('data');
-//		form_data.append('paper',paper);
-//		form_data.append('type', 'sweiv');
-//		ajax_request(form_data, ajax_url, "sweiv");
+		var ajax_url = baserUrl+'archive/sweiv.php';
+		var form_data = new FormData();
+		var paper = $(this).attr('data');
+		form_data.append('paper',paper);
+		form_data.append('type', 'sweiv');
+		ajax_request(form_data, ajax_url, "sweiv");
 	
 	//remove author
 	});

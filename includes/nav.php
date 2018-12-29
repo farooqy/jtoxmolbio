@@ -14,7 +14,7 @@ $logout = $url."logout";
 $board = $url."board";
 
 $logo1 = $url."uploads/sitefiles/logos/jtoxLogoMain.png";
-$logo2 = $url."uploads/sitefiles/logos/penasia.png";
+$logo2 = $url."uploads/sitefiles/logos/1xLogosmall.png";
 $ccLincese = $url."uploads/sitefiles/icons/cclicense.png";
 
 ?>
@@ -23,7 +23,7 @@ $ccLincese = $url."uploads/sitefiles/icons/cclicense.png";
  		    <!-- Brand and toggle get grouped for better mobile display -->
  		    <div class="row logo2">
  		      <a class="navbar-brand mainlogo2" href="<?php echo $url ?>">
- 		      	<img src="<?php echo $logo2 ?>" height="40px" class="na">	
+ 		      	<img src="<?php echo $logo2 ?>" height="60px" class="na">	
  		      </a>
 	        </div>
  		    <div class="navbar-header ">

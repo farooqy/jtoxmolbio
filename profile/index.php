@@ -270,12 +270,6 @@ $profilePage = true;
   		<input type="text" class="userCountry" name="userCountry" placeholder="Country" value="">
   		<button class="btn btn-primary changeProfile" target="userCountry">Save</button>
   	</div>
-  	<div class="row redirectPage">
-  		<p>
-  			Not a member? 
-  			<a href="<?php echo $url.'register' ?>">Register here</a>
-  		</p>
-  	</div>
   </div>
   <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
   	

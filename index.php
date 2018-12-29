@@ -3,13 +3,15 @@ $root = $_SERVER["DOCUMENT_ROOT"]."/";
 $url = "http://jtoxmolbio/";
 
 require_once($root."classes/SuperClass.php");
+require_once($root."classes/functions.php");
+
 $Super_Class = new Super_Class($root."errors/");
 $table = array("journal_main","published_journals");
 $fields = "`journal_main`.id, manToken, title, j_type, views, `published_journals`.j_url, `published_journals`.j_time";
 $condition = "`published_journals`.j_id = `journal_main`.id AND status = 'published'";
-$Manuscripts = $Super_Class->Super_Get($fields, $table, $condition, "`journal_main`.id LIMIT 5");
+$Manuscripts = $Super_Class->Super_Get($fields, $table, $condition, "`published_journals`.j_time DESC LIMIT 5");
 
-$popularManuscripts = $Super_Class->Super_Get($fields, $table, $condition, "views LIMIT 5");
+$popularManuscripts = $Super_Class->Super_Get($fields, $table, $condition, "views DESC LIMIT 5");
 if($Manuscripts === false)
 {
 	$errorMessage = "Failed to get the publsihed manuscript. Please contact support ".$Super_Class->Get_Message();
@@ -22,6 +24,22 @@ else if(is_array($Manuscripts) === false)
 	$Manuscripts = null;
 	unset($Manuscripts);
 }
+else if($popularManuscripts === false)
+{
+	$errorMessage = "Failed to get the popular publsihed manuscript. Please contact support ".$Super_Class->Get_Message();
+	$Manuscripts = null;
+	$popularManuscripts = null;
+	unset($popularManuscripts);
+	unset($Manuscripts);
+}
+else if(is_array($popularManuscripts) === false)
+{
+	$errorMessage = "The retrieved popular publishes are not of recognized types. Please contact support for assistance";
+	$Manuscripts = null;
+	$popularManuscripts = null;
+	unset($popularManuscripts);
+	unset($Manuscripts);
+}
 else
 {
 	foreach($Manuscripts as $manKey => $manData)
@@ -32,7 +50,8 @@ else
 		$fields = "id, a_title, a_secondName";
 		$condition = "journal_id = $manID";
 		$Authors = $Super_Class->Super_Get($fields, $table, $condition, "id");
-
+		$Manuscripts[$manKey]["authors"] ="";
+		$Manuscripts[$manKey]["j_time"]=format_time($manData["j_time"]);
 		if($Authors === false)
 		{
 			$Manuscripts[$manKey]["authors"] = "Failed to get authors";
@@ -45,7 +64,7 @@ else
 		{
 			foreach($Authors as $akey => $adata)
 			{
-				if(isset($Manuscripts[$manKey]["authors"]))
+				if(empty($Manuscripts[$manKey]["authors"]))
 				{
 					$Manuscripts[$manKey]["authors"] = $Manuscripts[$manKey]["authors"]." | ".$adata["a_title"]." ".$adata["a_secondName"];
 				}
@@ -65,6 +84,51 @@ else
 		}
 		else 
 			$Manuscripts[$manKey]["figureurl"] = $Figure[0]["figure_url"];
+		
+		
+	}
+	foreach($popularManuscripts as $manKey => $manData)
+	{
+		$manID = $manData["id"];
+		$manToken = $manData["manToken"];
+		$table = "journal_authors";
+		$fields = "id, a_title, a_secondName";
+		$condition = "journal_id = $manID";
+		$Authors = $Super_Class->Super_Get($fields, $table, $condition, "id");
+		$popularManuscripts[$manKey]["authors"] ="";
+		$popularManuscripts[$manKey]["j_time"]=format_time($manData["j_time"]);
+		if($Authors === false)
+		{
+			$popularManuscripts[$manKey]["authors"] = "Failed to get authors";
+		}
+		else if(is_array($Authors) === false)
+		{
+			$popularManuscripts[$manKey]["authors"] = "unrecognized author type";
+		}
+		else
+		{
+			foreach($Authors as $akey => $adata)
+			{
+				if(empty($popularManuscripts[$manKey]["authors"]))
+				{
+					$popularManuscripts[$manKey]["authors"] = $popularManuscripts[$manKey]["authors"]." | ".$adata["a_title"]." ".$adata["a_secondName"];
+				}
+				else
+				{
+					$popularManuscripts[$manKey]["authors"] = $adata["a_title"]." ".$adata["a_secondName"];
+				}
+			}
+		}
+		$table = "journal_figures";
+		$fields = "figure_url";
+		$condition = "journal_id = $manID";
+		$Figure = $Super_Class->Super_Get($fields, $table, $condition, $fields);
+		if($Figure === false || is_array($Figure) === false || count($Figure) <= 0)
+		{
+			$popularManuscripts[$manKey]["figureurl"] = $url."uploads/sitefiles/icons/close_red.png";
+		}
+		else 
+			$popularManuscripts[$manKey]["figureurl"] = $Figure[0]["figure_url"];
 		
 		
 	}
@@ -161,13 +225,14 @@ $homePage = true;
 				  $manAuthor = $manData["authors"];
 				  $manType = $manData["j_type"];
 				  $manUrl = $manData["j_url"];
-				  $manTime = $manData["time"];
+				  $manTime = $manData["j_time"];
+				  $manViews = $manData["views"];
 				  ?>
 		  
           <div class="row">
            	<div class="media-object-default">
             	  <div class="media">
-            	    <div class="media-left"><a href="#"><img class="media-object" src="uploads/sitefiles/slide/slider2.png" alt="placeholder image" height="160px" width="210px;"></a></div>
+            	    <div class="media-left"><a href="#"><img class="media-object" src="<?php echo $manFigure ?>" alt="placeholder image" height="160px" width="210px;"></a></div>
             	    <div class="media-body">
             	      <h3 class="media-heading"><?php echo $manTitle ?></h3>
             	       <div class="">
@@ -175,6 +240,8 @@ $homePage = true;
             	       	<?php echo $manTime ?>
             	       	<span class="glyphicon glyphicon-tasks" ></span>
             	       	<?php echo $manType ?>
+            	       	<span class="glyphicon glyphicon-eye-open" ></span>
+            	       	<?php echo $manViews ?> Views
             	       </div>
             	       <div class="paperAuthor">
             	       	<span class="glyphicon glyphicon-pencil">
@@ -196,6 +263,7 @@ $homePage = true;
 		  }
 		  
 		  ?>
+<!--
           <div class="row">
            	<div class="media-object-default">
             	  <div class="media">
@@ -251,8 +319,59 @@ $homePage = true;
        	    </div>
           </div>
            
+-->
            
           <div class="row latestArticleBar">Popular Article</div>
+          <?php 
+		  if(isset($popularManuscripts) && is_array($popularManuscripts))
+		  {
+			  
+			  foreach($popularManuscripts as $manKey => $manData)
+			  {
+				  $manTitle = $manData["title"];
+				  $manFigure = $manData["figureurl"];
+				  $manAuthor = $manData["authors"];
+				  $manType = $manData["j_type"];
+				  $manUrl = $manData["j_url"];
+				  $manTime = $manData["j_time"];
+				  $manViews = $manData["views"];
+				  ?>
+		  
+          <div class="row">
+           	<div class="media-object-default">
+            	  <div class="media">
+            	    <div class="media-left"><a href="#"><img class="media-object" src="<?php echo $manFigure ?>" alt="placeholder image" height="160px" width="210px;"></a></div>
+            	    <div class="media-body">
+            	      <h3 class="media-heading"><?php echo $manTitle ?></h3>
+            	       <div class="">
+            	       	<span class="glyphicon glyphicon-calendar" ></span>
+            	       	<?php echo $manTime ?>
+            	       	<span class="glyphicon glyphicon-tasks" ></span>
+            	       	<?php echo $manType ?>
+            	       	<span class="glyphicon glyphicon-eye-open" ></span>
+            	       	<?php echo $manViews ?> Views
+            	       </div>
+            	       <div class="paperAuthor">
+            	       	<span class="glyphicon glyphicon-pencil">
+            	       		<?php echo $manAuthor ?>
+            	       	</span>
+            	       	  
+            	       </div>
+            	       <div class="openArticle">
+            	       	<span class="glyphicon glyphicon-open-file"></span>
+            	       	<a href="<?php echo $manUrl ?>" class="">Read Article </a>
+            	       </div>
+						
+					  </div>
+          	    </div>
+       	    </div>
+          </div>
+				  <?php
+			  }
+		  
+		  }
+		  ?>
+<!--
           <div class="row">
            	<div class="media-object-default">
             	  <div class="media">
@@ -264,6 +383,8 @@ $homePage = true;
             	       	11-02-2018
             	       	<span class="glyphicon glyphicon-tasks" ></span>
             	       	Review Article
+            	       	<span class="glyphicon glyphicon-eye-open" ></span>
+            	       	8 Views
             	       </div>
             	       <div class="paperAuthor">
             	       	<span class="glyphicon glyphicon-pencil">
@@ -307,6 +428,7 @@ $homePage = true;
           	    </div>
        	    </div>
           </div>
+-->
             
             
     	</div>
@@ -315,17 +437,24 @@ $homePage = true;
     		<div class="row rightbarText">
     			Submit paper
     		</div>
+    		<?php
+			if(isset($_SESSION["isLoggedIn"]) === false)
+			{
+				?>
     		<div class="row rightbarText">
     			Login
     		</div>
     		
     		<form class="row formHomeLogin" action="" method="post">
     			<label for="loginEmail" class="textLabel">Email</label>
-    			<input class="text-input" placeholder="Enter Email" name="loginEmail" type="email">
+    			<input class="text-input" placeholder="Enter Email" name="loginEmailAddress" type="email">
     			<label for="loginPassword" class="textLabel">Password</label>
-    			<input class="text-input" placeholder="Enter password" name="loginEmail" id="inputPassword" type="password">
+    			<input class="text-input" placeholder="Enter password" name="loginPassword" id="inputPassword" type="password">
     			<input type="submit" value="Login" name="homeLogin" class="btn btn-success btn-login">
     		</form>
+    		<?php
+			}
+		  ?>
     		
     		<div class="row openaccess">
     			

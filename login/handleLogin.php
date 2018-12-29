@@ -11,7 +11,7 @@ if(isset($_SESSION["isLoggedIn"]))
 		"isSuccess" => false,
 	));
 }
-else if(isset($_POST["loginUser"]))
+else if(isset($_POST["loginUser"]) && isset($_POST["loginEmailAddress"]) && isset($_POST["loginPassword"]))
 {
 	$errorMessage = null;
 	$successMessage = null;

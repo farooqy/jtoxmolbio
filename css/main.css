@@ -1,15 +1,19 @@
 body {
-	background-color:#e1fbee;
+	background-color:#eeeeee;
 }
 .Progressbar1 {
 	display: block;
 }
 .navbar-inverse {
-	background-color: white;;
+	background-color: #eff5f3;;
 	color: black;
 }
 .mainlogo1 {
 	margin-top: -8px;
+}
+.mainlogo2 {
+	margin-top: -10px;
+	margin-bottom: 25px;
 }
 .mainlogo3 {
 	display: none;
