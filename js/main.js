@@ -109,6 +109,23 @@ $(document).ready(function(){
 		var url = baserUrl+"submit/passForm2.php";
 		ajax_request(formData, url, "passForm2");
 	});
+	//edit authors
+	$('#newAuthorForm').submit(function(e){
+		e.preventDefault();
+		var formData = new FormData(this);
+		var url = baserUrl+'tracks/addAuthor.php';
+		formData.append("submitType", "newAuthor");
+		ajax_request(formData, url, "newAuthor");
+	});
+	$('.btn-mkcauthor').click(function(){
+		
+		var formData = new FormData();
+		var url = baserUrl+'tracks/cauthor.php';
+		formData.append("submitType", "cauthor");
+		formData.append("target", $(this).attr('target'));
+		ajax_request(formData, url, "cauthor");
+	});
+	
 	//changing corresponding author
 	$('.corresPondingAuthor').click(function(){
 		if($(this).hasClass('glyphicon-ok-circle'))
@@ -137,21 +154,29 @@ $(document).ready(function(){
 		$('.triggerFileOpen').attr('accept', types);
 		$("form input[name='textHidden']").val(target);
 		$('.triggerFileOpen').click();
-		
-	
-		
 	});
 	$('.triggerFileOpen').change(function(){
 		setTimeout($('.uploadFormMan').submit(),10000);
-		
-		
 	});
 	$('.uploadFormMan').submit(function(e){
 		e.preventDefault();
 		var formData = new FormData(this);
 		formData.append('submitType', "uploadFile");
 		var url = baserUrl+"submit/UploadFile.php";
-		ajax_request(formData, url, "uploadFile");
+		var ftype = "uploadFile";
+		if($("form input[name='textHidden']").val() === "newDynamicFile")
+		{
+			url = baserUrl+"tracks/uploadfile.php";
+			ftype = "fileUpload"
+		}	
+		
+		ajax_request(formData, url, ftype);
+	});
+	$('.btn-addFile').click(function(){
+		$("form input[name='textHidden']").val('newDynamicFile');
+		var types = ".png, .jpg, .jpeg";
+		$('.triggerFileOpen').attr('accept', types);
+		$('.triggerFileOpen').click();
 	});
 	
 	$(".paperForm4").submit(function(e){
@@ -205,6 +230,20 @@ $(document).ready(function(){
 	});
 	$('.removeAuthor').click(function(){
 		removeAuthor($(this));
+	});
+	$('.btn-dauthor').click(function(){
+		var formData = new FormData();
+		var url = baserUrl+"tracks/dauthor.php";
+		formData.append('submitType', 'dauthor');
+		formData.append('target',$(this).attr('target'));
+		ajax_request(formData, url, "dauthor");
+	});
+	$('.removeFigure').click(function(){
+		var formData = new FormData();
+		var url = baserUrl+"tracks/dfigure.php";
+		formData.append('submitType', 'dfigure');
+		formData.append('target',$(this).attr('target'));
+		ajax_request(formData, url, "dauthor");
 	});
 	//remove file
 //	$('.file-remove').click(function(){
@@ -389,6 +428,10 @@ function successHandle(data,regType, base='')
 			$('.openViews').css('display','block');
 			$('.submit_views').text(data.data.man_views);
 			    
+		}
+		else if(regType === "newAuthor" || regType === "dauthor" || regType === "cauthor" || regType === "fileUpload")
+		{
+			window.location.reload();
 		}
 		else
 		{
