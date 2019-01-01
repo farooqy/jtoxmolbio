@@ -338,7 +338,7 @@ $trackPage = true;
 					$token = $Manuscript[0]["manToken"];
 					$manid = $Manuscript[0]["id"];
 					?>
-					<a href="<?php echo $url.'tracks/edit?target='.$token.'pos='.$manid ?>"  class="editUrl">
+					<a href="<?php echo $url.'tracks/edit.php?target='.$token.'&pos='.$manid ?>"  class="editUrl">
 						<span class="glyphicon glyphicon-edit"></span>
 						Edit paper
 					</a>
