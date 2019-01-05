@@ -22,7 +22,9 @@ function format_time($time=0, $format="d-m-Y")
  //sanitieze string
  function Sanitize_String($str)
  {
-    return filter_var($str, FILTER_SANITIZE_STRING);
+    $str = filter_var($str, FILTER_SANITIZE_STRING);
+	$str = str_replace("\n", "<br>",$str);
+	return $str;
  }
  
  //validate integer
