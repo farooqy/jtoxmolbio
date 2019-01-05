@@ -170,6 +170,8 @@ $trackPage = true;
  	<div class="row nav-margin">
    	<?php require_once($root."includes/nav.php"); ?>
     </div>
+</div>
+<div class="container tracksContainer">
     <?php
 	if(isset($errorTrigger))
 	{

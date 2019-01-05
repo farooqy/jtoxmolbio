@@ -87,16 +87,19 @@ else
 			$editA = $url."tracks/editFA.php?target=$token&pos=$target&type=1";
 			?>
 				<div class="row">
+					<input type="hidden" name="manData" value="<?php echo $token.'|'.$target ?>" class="manData">
+				</div>
+				<div class="row">
 					<input type="text" name="manTitle" value="<?php echo $manTitle ?>" class="editManTitle">
-					<button class="btn btn-primary editMan" target="manTitile">Change</button>
+					<button class="btn btn-primary editMan" target="editManTitle">Change</button>
 				</div>
 				<div class="row">
 					<textarea type="text" name="manAbstract"  class="editManAbstract"><?php echo $manAbstract ?></textarea>
-					<button class="btn btn-primary editMan" target="manTitile">Change</button>
+					<button class="btn btn-primary editMan" target="editManAbstract">Change</button>
 				</div>
 				<div class="row">
 					<input type="text" name="manKeywords" value="<?php echo $manKeywords?>" class="editManKeywords">
-					<button class="btn btn-primary editMan" target="manTitile">Change</button>
+					<button class="btn btn-primary editMan" target="editManKeywords">Change</button>
 				</div>
 				<div class="row editAuthors">
 					<a href="<?php echo $editA ?>">
