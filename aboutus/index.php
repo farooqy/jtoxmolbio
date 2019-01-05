@@ -29,6 +29,9 @@ $aboutPage = true;
    	<?php require_once($root."includes/nav.php"); ?>
     </div>
     
+</div>
+<div class="container">
+    
 	<div class="row aboutUsContent">
    		<div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
    			<div class="row">

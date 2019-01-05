@@ -141,7 +141,7 @@ $archivePage = true;
 	{
 		?>
 	<div class="row archiveDiv">
-		<div class="col-md-3 col-lg-3 col-xs-3 col-sm-3">
+		<div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
 			<?php
 		$numvs = count($Volume);
 		for($i=0; $i<$numvs; $i++)
@@ -194,7 +194,7 @@ $archivePage = true;
 			<?php
 		}?>
 		</div>
-		<div class="col-md-8 col-lg-8 col-xs-9 col-sm-9 archiveBox">
+		<div class="col-md-8 col-lg-8 col-xs-12 col-sm-12 archiveBox">
 			
 			
                 <div class="row">

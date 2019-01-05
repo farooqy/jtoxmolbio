@@ -28,6 +28,8 @@ $authorPage = true;
    	<?php require_once($root."includes/nav.php"); ?>
     </div>
     
+</div>
+<div class="container">
 	<div class="row authorsPageBox">
    		<div class="col-md-3 col-lg-3 col-sm-1 col-xs-1">
    			

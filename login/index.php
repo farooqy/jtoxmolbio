@@ -31,13 +31,17 @@ $loginPage = true;
 <![endif]-->
 </head>
 
-<body style="padding-top: 70px">
+<body style="">
 <div class="container">
   <div class="row" id="header">
   	<?php require($root."includes/nav.php"); ?>
   </div>
   
-  <div class="row loginPage">
+  
+	
+</div>
+<div class="container">
+ <div class="row loginPage">
   <div class="col-xs-0 col-sm-0 col-md-3 col-lg-3">
   	
   </div>
@@ -97,10 +101,7 @@ $loginPage = true;
   	
   </div>
 		
-  </div>
-	
-</div>
-<div class="container">
+ </div>
 	<?php require_once($root."includes/footer.html") ?>
 </div>
 
