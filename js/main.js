@@ -125,7 +125,16 @@ $(document).ready(function(){
 		formData.append("target", $(this).attr('target'));
 		ajax_request(formData, url, "cauthor");
 	});
-	
+	$('.editMan').click(function(){
+		var target = $(this).attr('target');
+		var tvalue = $('.'+target).val();
+		var url = baserUrl+"tracks/editMan.php";
+		var formData = new FormData();
+		formData.append('target', target);
+		formData.append('tvalue', tvalue);
+		formData.append("manData", $('.manData').val());
+		ajax_request(formData, url, "editMan");
+	});
 	//changing corresponding author
 	$('.corresPondingAuthor').click(function(){
 		if($(this).hasClass('glyphicon-ok-circle'))
