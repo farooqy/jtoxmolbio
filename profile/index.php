@@ -8,7 +8,7 @@ $url = "http://jtoxmolbio/";
 ini_set("SMTP","ssl://smtp.gmail.com");
 	  ini_set("smtp_port","465");
 require_once($root."classes/functions.php");
-if(isset($_SESSION["isLoggedIn"]) === false && isset($_SESSION["verifStatus"]))
+if(isset($_SESSION["isLoggedIn"]) === false )
 {
 	header("Location: $url".'login?redirect=profile');
 	exit(0);
@@ -180,8 +180,12 @@ $profilePage = true;
   <div class="row" id="header">
   	<?php require($root."includes/nav.php"); ?>
   </div>
-  
-  <div class="row errorDiv mar-top-90">
+ 
+	
+</div>
+<div class="container profileContainer">
+	 
+  <div class="row errorDiv">
   	
   </div>
   <?php
@@ -190,7 +194,7 @@ $profilePage = true;
 		$usertoken = $_SESSION["veriftoken"];
 		$veriflink = $url.'profile?requestType=verification&token='.$usertoken;
 		?>
-  <div class="row  mar-top-90 displayError" style="display: block">
+  <div class="row displayError" style="display: block">
   	<?php echo $errorMessage ?>
   </div>
   <div class="row verifDiv">
@@ -203,17 +207,17 @@ $profilePage = true;
 	else if(isset($success))
 	{
 		?>
-  <div class="row successDiv mar-top-90" style="display: block">
+  <div class="row successDiv " style="display: block">
   	<?php echo $success ?>
   </div>
 		<?php
 	}
-	else  if($_SESSION["verifStatus"] === "unverified")
+	else  if(isset($_SESSION["verifStatus"]) && $_SESSION["verifStatus"] === "unverified")
 	{
 		$usertoken = $_SESSION["veriftoken"];
 		$veriflink = $url.'profile?requestType=verification&token='.$usertoken;
 		?>
-  <div class="row verifDiv mar-top-90">
+  <div class="row verifDiv ">
   	You have not verified your account. Some of the functionalities are disabled until your verify your account. Please
 	<a href="<?php echo $veriflink ?>"> Click here </a> 
 	to verify your account
@@ -276,9 +280,6 @@ $profilePage = true;
   </div>
 		
   </div>
-	
-</div>
-<div class="container">
 	<?php require_once($root."includes/footer.html") ?>
 </div>
 <div class="container-fluid loader-gif">
