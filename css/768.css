@@ -43,4 +43,17 @@
 	.manEditDiv div .a-icon {
 		height: 90px;
 	}
+	.logo2:after {
+		text-align: center;
+		margin-left: 0px;
+	}
+	.media-body .media-heading {
+		font-size: 12px;
+	}
+	.submit_title{
+		font-size: 14px;
+	}
+	.submit_abstract {
+		font-size: 13px;
+	}
 }

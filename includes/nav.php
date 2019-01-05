@@ -23,7 +23,12 @@ $ccLincese = $url."uploads/sitefiles/icons/cclicense.png";
  		    <!-- Brand and toggle get grouped for better mobile display -->
  		    <div class="row logo2">
  		      <a class="navbar-brand mainlogo2" href="<?php echo $url ?>">
- 		      	<img src="<?php echo $logo2 ?>" height="60px" class="na">	
+ 		      	<img src="<?php echo $logo2 ?>" height="60px" class="na">
+<!--
+ 		      	<span class="logo_text">
+ 		      		Journal of Toxicology and Molecular Biology
+ 		      	</span>
+-->
  		      </a>
 	        </div>
  		    <div class="navbar-header ">
