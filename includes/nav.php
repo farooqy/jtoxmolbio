@@ -22,7 +22,7 @@ $ccLincese = $url."uploads/sitefiles/icons/cclicense.png";
  		  <div class="container navbar navbar-inverse  navbar-fixed-top">
  		    <!-- Brand and toggle get grouped for better mobile display -->
  		    <div class="row logo2">
- 		      <a class="navbar-brand mainlogo2" href="<?php echo $url ?>">
+ 		      <a class="navbar-brand mainlogo2" href="http://www.pan-asiaresearch.com" target="_blank">
  		      	<img src="<?php echo $logo2 ?>" height="60px" class="na">
 <!--
  		      	<span class="logo_text">
@@ -36,7 +36,7 @@ $ccLincese = $url."uploads/sitefiles/icons/cclicense.png";
  		      <a class="navbar-brand mainlogo1" href="<?php echo $url ?>">
  		      	<img src="<?php echo $logo1 ?>" height="40px">	
  		      </a>
- 		      <a class="navbar-brand mainlogo3" href="<?php echo $url ?>">
+ 		      <a class="navbar-brand mainlogo3" href="http://www.pan-asiaresearch.com" target="_blank">
  		      	<img src="<?php echo $logo2 ?>" height="40px" class="na">	
  		      </a>
 	        </div>

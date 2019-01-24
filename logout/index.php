@@ -1,6 +1,7 @@
 <?php session_start();
-
-$url = "http://jtoxmolbio/";
+$root = $_SERVER["DOCUMENT_ROOT"]."/";
+$config = require_once($root."config/config.php");
+$url = $config["URL"];
 
 $_SESSION["isLoggedIn"] = false;
 $_SESSION["veriftoken"] = null;

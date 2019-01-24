@@ -1,5 +1,7 @@
 <?php session_start();
-$root = $_SERVER['DOCUMENT_ROOT']."/";
+$root = $_SERVER["DOCUMENT_ROOT"]."/";
+$config = require_once($root."config/config.php");
+$url = $config["URL"];
 require_once($root."classes/functions.php");
 if(isset($_POST["paper"]) && isset($_POST["type"]))
 {

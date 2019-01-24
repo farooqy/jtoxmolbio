@@ -57,7 +57,7 @@ body {
 	margin-bottom: 120px;
 }
 .firstContent {
-	margin-top: 150px;
+	margin-top: 10px;
 }
 .firstContent .sliderBox .slide .item img {
 	height: 400px;
@@ -149,7 +149,7 @@ body {
 	color:black;
 }
 .aboutUsContent, .authorsPageBox , .contactusPageBox{
-	margin-top: 150px;
+	margin-top: 10px;
 	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
 	font-size: 19px;
 }
@@ -203,7 +203,7 @@ body {
 	
 }
 .submitPageBox {
-	margin-top: 90px;
+	margin-top: 10px;
 	text-align: justify;
 }
 #paperForm1, #paperForm2 {
@@ -427,7 +427,7 @@ body {
 
 /* login div */
 .loginPage {
-	margin-top: 150px;
+	margin-top: 10px;
 }
 .loginDiv form {
 	background-color: white;
@@ -458,7 +458,7 @@ body {
 /*registration */
 
 .registerPage {
-	margin-top: 90px;
+	margin-top: 10px;
 }
 .registerDiv form {
 	background-color: white;
@@ -492,7 +492,7 @@ body {
 }
 /* rua page */
 .rua-agreement {
-	margin-top: 90px;
+	margin-top: 10px;
 	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
 	font-size: 18px;
 }
@@ -518,7 +518,7 @@ body {
 
 /* profile page */
 .profileContainer {
-	margin-top: 90px;
+	margin-top: 10px;
 }
 .verifDiv, .successDiv {
 	background-color: white;
@@ -565,7 +565,7 @@ body {
 }
 /* general */
 .mar-top-90 {
-	margin-top: 90px;
+	margin-top: 10px;
 }
 .loader-gif img {
 	height: 100px;
@@ -584,7 +584,7 @@ body {
 }
 /* manuscript */
 .tracksContainer {
-	margin-top: 50px;
+	margin-top: 10px;
 }
 .manuscriptDiv {
 	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
@@ -600,7 +600,7 @@ body {
 	margin: 0px 10px 0px 10px;
 }
 .manuscriptDetails .mancover {
-	margin-top: 30px;
+	margin-top: 20px;
 	margin-bottom: 10px;
 }
 .manuscriptDetails .row block .coverurl, .manuscriptDetails .row block .manurl , .manuscriptDetails .row block .editUrl{
@@ -642,7 +642,7 @@ body {
 	display: inline-block;
 }
 .editorBox {
-	margin-top: 150px;
+	margin-top: 10px;
 	background-color: white;
 	border:thin solid gray;
 	border-radius: 5px;
@@ -692,7 +692,7 @@ body {
 }
 /*archive*/
 .archiveDiv {
-	margin-top: 150px;
+	margin-top: 10px;
 	font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
 }
 .archiveDiv ul {
@@ -821,4 +821,7 @@ body {
 .manEditDiv .cauthor-cion {
 	color: green;
 	margin-left: 10px;
+}
+.navbar-fixed-top {
+	position: relative;
 }

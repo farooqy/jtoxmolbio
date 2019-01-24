@@ -1,6 +1,8 @@
 <?php session_start();
 $root = $_SERVER["DOCUMENT_ROOT"]."/";
-$url = "http://jtoxmolbio/";
+$config = require_once($root."config/config.php");
+$url = $config["URL"];
+
 require_once($root."classes/SuperClass.php");
 $Super_Class = new Super_Class();
 $table = array("journal_main","published_journals");
@@ -263,7 +265,7 @@ $archivePage = true;
 <script src="../jQueryAssets/jquery-1.11.1.min.js"></script>
 <script src="../jQueryAssets/jquery.ui-1.10.4.progressbar.min.js"></script>
 <style>
-	@import url("../css/main.css");
+	@import url("../css/main.css?version=1.2.4");
 	@import url("../css/768.css");
 	@import url("../css/footer.css");
 	@import url("../css/font-awesome.min.css");

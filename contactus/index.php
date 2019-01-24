@@ -1,6 +1,7 @@
 <?php session_start();
 $root = $_SERVER["DOCUMENT_ROOT"]."/";
-$url = "http://jtoxmolbio/";
+$configure = require_once($root."config/config.php");
+$url = $configure["URL"];
 
 $contactPage = true;
 require_once($root."includes/lib/simple-botdetect.php");

@@ -4,39 +4,39 @@ if(!isset($_SESSION["loggedIN"]))
 else
   $loginStatus = "Log out";
 
-$url = "https://jtoxmolbio.com/";
+$root = $_SERVER["DOCUMENT_ROOT"]."/";
+$config = require_once($root."config/config.php");
+$url = $config["URL"];
 ?>
-<script src="https://jtoxmolbio.com/js/jQuery.js"></script>
-<script src="https://jtoxmolbio.com/bts/js/bootstrap.js"></script>
-<script src="https://jtoxmolbio.com/js/main.js"></script>
-<link rel="stylesheet" href="https://jtoxmolbio.com/css/home.css">
-<link rel="stylesheet" href="https://jtoxmolbio.com/bts/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://jtoxmolbio.com/bts/css/bootstrap.css">
-<link rel="stylesheet" href="https://jtoxmolbio.com/css/gens.css">
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>Jtoxmolbio | Terms of Use</title>
+    <meta charset="utf-8">
+
+    <link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+    <link href="../jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
+    <link href="../jQueryAssets/jquery.ui.progressbar.min.css" rel="stylesheet" type="text/css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Of Toxicology and Molecular Biology</title>
   </head>
   <body>
     <div class="container">
       <div class="row">
-        <?php require_once("../headers/menuOneWithLogo.php");?>
-      </div>
-      <div class="row">
-        <?php require_once("../headers/menuTwo.php");?>
+        <?php require_once($root."includes/nav.php"); ?>
       </div>
       <div class="row">
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
           
         </div>
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-          <div class="row center">
+          <div class="row center termspage">
             <h2 class="size-18">
               <b>Terms of Use</b>
             </h2>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <p class="p-about ">
               By accessing this web site, downloading, printing, or reading
               any article published in our journal, you are stating that you
@@ -86,7 +86,7 @@ $url = "https://jtoxmolbio.com/";
               </li>
             </p>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <p class="p-about">
               As a condition to your use of journal sites, you agree not to:
               <li>
@@ -120,12 +120,12 @@ $url = "https://jtoxmolbio.com/";
               </li>
             </p>
           </div>
-          <div class="row ">
+          <div class="row termsparagraph">
             <h2 class="size-18">
               <b>MODIFICATION OF THE JOURNAL SITES AND TERMS OF USE</b>
             </h2>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <p class="p-about">
               Journal of Toxicology and Molecular Biology reserves the right
               to modify or discontinue temporarily or permanently the journal
@@ -139,12 +139,12 @@ $url = "https://jtoxmolbio.com/";
               are bound.
             </p>
           </div>
-          <div class="row ">
+          <div class="row termsparagraph">
             <h2 class="size-18">
               <b>SPECIAL CONSIDERATION FOR INTERNATIONAL USE</b>
             </h2>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <p class="p-about">
               Recognizing the global nature of the Internet, you agree to
               comply with all local rules regarding online conduct. 
@@ -153,12 +153,12 @@ $url = "https://jtoxmolbio.com/";
               China/India or the country in which you reside.
             </p>
           </div>
-          <div class="row ">
+          <div class="row termsparagraph">
             <h2 class="size-18">
               <b>INTELLECTUAL PROPERTY RIGHTS</b>
             </h2>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <p class="p-about">
               These rights include, without limitation, patents, trademarks,
               trade names, design rights, copyright (including rights in
@@ -172,12 +172,12 @@ $url = "https://jtoxmolbio.com/";
               Molecular Biology
             </p>
           </div>
-          <div class="row ">
+          <div class="row termsparagraph">
             <h2 class="size-18">
               <b>Additional Services</b>
             </h2>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <p class="p-about">
               In addition Journal of Toxicology and Molecular Biology may
               offer additional services, including optional E-mail Alerting
@@ -188,12 +188,12 @@ $url = "https://jtoxmolbio.com/";
               information for the purposes of providing these services.
             </p>
           </div>
-          <div class="row ">
+          <div class="row termsparagraph">
             <h2 class="size-18">
               <b>Use of Cookies</b>
             </h2>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <p class="p-about">
               A cookie is a small piece of information that a website puts on
               a hard drive so that it can remember information about a user
@@ -208,12 +208,12 @@ $url = "https://jtoxmolbio.com/";
               the purposes of providing these services.
             </p>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <h2 class="size-18">
               <b>Session Control Cookie</b>
             </h2>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <p class="p-about">
               Session control cookies are used on most Web sites today
               because they facilitate navigation. In order to use Journal of
@@ -233,12 +233,12 @@ $url = "https://jtoxmolbio.com/";
               not out of convenience.
             </p>
           </div>
-          <div class="row ">
+          <div class="row termsparagraph">
             <h2 class="size-18">
               <b>Remember Me Cookie</b>
             </h2>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <p class="p-about">
               When an Authorized User registers to gain access to Journal of
               Toxicology and Molecular Biology or its personalization
@@ -259,12 +259,12 @@ $url = "https://jtoxmolbio.com/";
               Biology My Profile page.
             </p>
           </div>
-          <div class="row ">
+          <div class="row termsparagraph">
             <h2 class="size-18">
               <b>Warranty Limitations</b>
             </h2>
           </div>
-          <div class="row">
+          <div class="row termsparagraph">
             <p class="p-about">
               JOURNAL OF TOXICOLOGY AND MOLECULAR BIOLOGY(JTMB) ONLINE
               LIBRARY AND THE ELECTRONIC PRODUCTS AND ALL MATERIALS CONTAINED
@@ -290,9 +290,26 @@ $url = "https://jtoxmolbio.com/";
         </div>
       </div>
 
+     <?php require_once($root."includes/footer.html") ?>
     </div>
+    <script src="../js/jquery-1.11.3.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../jQueryAssets/jquery-1.11.1.min.js"></script>
+    <script src="../jQueryAssets/jquery.ui-1.10.4.progressbar.min.js"></script>
+    <style>
+      @import url("../css/main.css");
+      @import url("../css/768.css");
+      @import url("../css/footer.css");
+      @import url("../css/font-awesome.min.css");
+      .termspage {
+        margin-top: 150px;
+      }
+
+      .termsparagraph {
+        text-align:justify;
+        font-family: Times New Roman , Cambria, Hoefler Text, Liberation Serif, Times, serif;
+      }
+    </style>
   </body>
-    <footer class="container footer mar-top-10 border-7">
-      <?php require_once("../includes/footer.php");?>
-    </footer>
 </html>

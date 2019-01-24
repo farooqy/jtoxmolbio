@@ -1,6 +1,7 @@
 <?php session_start();
-$root = $_SERVER['DOCUMENT_ROOT']."/";
-$url = "http://jtoxmolbio";
+$root = $_SERVER["DOCUMENT_ROOT"]."/";
+$config = require_once($root."config/config.php");
+$url = $config["URL"];
 require_once($root."classes/functions.php");
 
 if(isset($_SESSION["isLoggedIn"]) && isset($_POST["target"]))
@@ -27,10 +28,12 @@ if(isset($_SESSION["isLoggedIn"]) && isset($_POST["target"]))
 	{
 		$errorMessage = "Invalid user credential token Please log out and login back";
 	}
-	else if(empty($userEmail))
+	else if(empty($userEmail) )
 	{
 		$errorMessage = "Invalid user credential email. Please log out and login back";
 	}
+	else if(isset($_POST["ptype"]))
+		$errorMessage = "Invalid data passed to email";
 	else 
 	{
 		require_once($root."classes/SuperClass.php");

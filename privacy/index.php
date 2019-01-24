@@ -3,8 +3,9 @@ if(!isset($_SESSION["loggedIN"]))
   $loginStatus = "Login";
 else
   $loginStatus = "Log out";
-$doc_root = $_SERVER['DOCUMENT_ROOT'];
-$url = $_SERVER["SERVER_HOST"]."/";
+$doc_root = $_SERVER["DOCUMENT_ROOT"]."/";
+$config = require_once($root."config/config.php");
+$url = $config["URL"];
 
 $jquery = $url.'js/jQuery.js';
 $bootstrapjs = $url.'bts/js/bootstrap.js';

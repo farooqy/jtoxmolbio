@@ -30,6 +30,13 @@ $(document).ready(function(){
 		var url = baserUrl+'login/handleLogin.php';
 		ajax_request(formData, url, 'login');
 	});
+	$('.forgotForm').submit(function(e){
+		e.preventDefault();
+		var formData = new FormData(this);
+		formData.append('forgotMemory', true);
+		var url = baserUrl+'forgot/handleForgot.php';
+		ajax_request(formData, url, 'forgot');
+	});
 	$('.formHomeLogin').submit(function(e){
 		e.preventDefault();
 		var formData = new FormData(this);
@@ -37,6 +44,12 @@ $(document).ready(function(){
 		var url = baserUrl+'login/handleLogin.php';
 		ajax_request(formData, url, 'login');
 	
+	});
+	$('.recoverForm').submit(function(e){
+		e.preventDefault();
+		var formData = new FormData(this);
+		var url = baserUrl+'forgot/recover.php';
+		ajax_request(formData, url, 'forgot');
 	});
 	//on contact
 	$('.formContactUs').submit(function(e){
@@ -73,7 +86,6 @@ $(document).ready(function(){
 		var url = baserUrl+'profile/update.php';
 		ajax_request(formData, url, 'updateProfile');
 	});
-	
 	//forms
 	$('.paperForm1').submit(function(e){
 		e.preventDefault();
@@ -441,6 +453,10 @@ function successHandle(data,regType, base='')
 		else if(regType === "newAuthor" || regType === "dauthor" || regType === "cauthor" || regType === "fileUpload")
 		{
 			window.location.reload();
+		}
+		else if(regType === "forgot")
+		{
+			window.location.href =baserUrl+"login";
 		}
 		else
 		{

@@ -1,6 +1,7 @@
 <?php session_start();
 $root = $_SERVER["DOCUMENT_ROOT"]."/";
-$url = "https://jtoxmolbio.com/";
+$config = require_once($root."config/config.php");
+$url = $config["URL"];
 require_once($root."classes/functions.php");
 if(isset($_POST["key"]) && isset($_POST["value"]))
 {

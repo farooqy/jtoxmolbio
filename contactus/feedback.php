@@ -1,6 +1,5 @@
 <?php 
-$root = $_SERVER["DOCUMENT_ROOT"]."/";
-$url = "http://jtoxmolbio/";
+
 $_SESSION['IsCaptchaSolved'] = false;
 if(isset($_POST["senderName"]) && isset($_POST["emailAddress"]))
 {

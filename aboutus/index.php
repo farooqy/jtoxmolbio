@@ -1,7 +1,7 @@
 <?php session_start();
 $root = $_SERVER["DOCUMENT_ROOT"]."/";
-$url = "http://jtoxmolbio/";
-
+$config = require_once($root."config/config.php");
+$url = $config["URL"];
 $morePage = true;
 $aboutPage = true;
 ?>
@@ -46,7 +46,7 @@ $aboutPage = true;
    			</div>
    			<div class="row">
    				<p>
-   					<a href="https://jtoxmolbio.com" target="_blank">Journal of Toxicology and Molecular Biology</a> is a peer-reviewed journal aiming to communicate high quality original research work, reviews , mini reviews that encompass all aspects of basic knowledge of the field of Toxicology, Cell and Molecular Biology. The journal welcomes outstanding contributions in any domain of toxicology and molecular biology. The journal gives researchers a faster path to publishing in a high-quality peer-reviewed journal. All work that reaches austere technical and ethics standards is published and immediately available to scientists and researchers. All articles published in this journal represent the opinion of the authors and not reflect the official policy of the Journal of Toxicology and Molecular Biology. 
+   					<a href="<?php echo $url ?>" target="_blank">Journal of Toxicology and Molecular Biology</a> is a peer-reviewed journal aiming to communicate high quality original research work, reviews , mini reviews that encompass all aspects of basic knowledge of the field of Toxicology, Cell and Molecular Biology. The journal welcomes outstanding contributions in any domain of toxicology and molecular biology. The journal gives researchers a faster path to publishing in a high-quality peer-reviewed journal. All work that reaches austere technical and ethics standards is published and immediately available to scientists and researchers. All articles published in this journal represent the opinion of the authors and not reflect the official policy of the Journal of Toxicology and Molecular Biology. 
    				</p>
    			</div>
    			
