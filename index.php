@@ -435,7 +435,7 @@ $homePage = true;
     	</div>
       <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12 ">
     		<div class="coverpage row">
-    			<img src="uploads/sitefiles/slide/coverpage.png"> 
+    			<img src="uploads/sitefiles/slide/coverpage.png">
     		</div>
     		<div class="row rightbarText">
     			Submit paper

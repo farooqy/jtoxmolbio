@@ -4,3 +4,4 @@ errors/error.log
 uploads/users/*
 classes/setJournal.php
 contactus/testbot
+config/config.php

@@ -1,5 +1,5 @@
 /* global $ */
-var baserUrl = "http://jtoxmolbio/";
+var baserUrl = "http://jtmb.scimazong.org/";
 
 $(document).ready(function(){
 	console.log($('body').innerHeight());
@@ -323,7 +323,7 @@ function successHandle(data,regType, base='')
 		}
 		else if(regType === "profileGet")
 		{
-			alert("data "+JSON.stringify(data.data));
+			//alert("data "+JSON.stringify(data.data));
 			$('.userFirstName').val(data.data.firstName);
 			$('.userLastName').val(data.data.lastName);
 			$('.userEmailAddress').val(data.data.email);
@@ -372,7 +372,7 @@ function successHandle(data,regType, base='')
 			tr = tr+" <td> "+span+" </td>";
 			tr = tr + "<td> <span class=\"glyphicon glyphicon-remove\" onclick=\"removeAuthor(this)\" target=\""+author.authorEmail+"\" ></span> </td> </tr>";
 			$('.authorTableBody').append(tr);
-			alert(tr);
+			//alert(tr);
 		}
 		else if(regType === "passForm2")
 		{
@@ -415,13 +415,13 @@ function successHandle(data,regType, base='')
 			if(regType === "slaveFile")
 			{
 				$(".manuscriptTableBody").html($(".tableReviewBody").html());
-				alert("slave is clicked should change master");
+				//alert("slave is clicked should change master");
 				$(".manuscriptTableBody span").attr("data-role", "masterFile")
 			}
 			else
 			{
 				$(".tableReviewBody").html($(".manuscriptTableBody").html());
-				alert("master is clicked should change slave");
+				//alert("master is clicked should change slave");
 				$(".tableReviewBody span").attr("data-role", "slaveFile")
 			}
 		}
